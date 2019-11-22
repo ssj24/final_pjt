@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'users.apps.UsersConfig',
+    'accounts.apps.AccountsConfig',
     'movies.apps.MoviesConfig',
     'bootstrap4',
     'django.contrib.admin',
@@ -122,4 +122,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'accounts.User'
