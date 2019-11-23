@@ -4,7 +4,6 @@
   <div class="container">
     <div class="row">
       {% for movie in movies %}
-        {% comment %} <div class="card col-3 col-sm-12 col-md-6 col-lg-4 p-0"> {% endcomment %}
         <div class="card col-2 p-0">
           <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" class="card-img-top" data-toggle="{{movie.title}}" data-target="#{{movie.title}}" alt="{{ movie.title }}포스터" height="70%">
           <div id="{{movie.title}}" class="modal fade" role="dialog">
@@ -36,21 +35,3 @@
   </div>
 
 {% endblock %}
-{% block script %}
-  $(document).ready(function(){
-    
-     $("body").on("click","#btn",function(){
-            
-          $("#myModal").modal("show");
-      
-          //appending modal background inside the blue div
-          $('.modal-backdrop').appendTo('.blue');   
-    
-          //remove the padding right and modal-open class from the body tag which bootstrap adds when a modal is shown
-          $('body').removeClass("modal-open")
-          $('body').css("padding-right","");     
-      });
- 
-	});
-
-{% endblock script %}
