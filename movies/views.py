@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import Http404, HttpResponse
-from .models import Movie, Rating
+from .models import Movie, Rating, Cast
 from .forms import RatingForm
 
 # Create your views here.

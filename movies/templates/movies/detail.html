@@ -8,7 +8,7 @@
   <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" alt="#" width="300px">
   <p>관객수 : {{ movie.audience }}</p>
   <p>개봉일 : {{ movie.start_date }}</p>
-  <p>감독 : {{ movie.director }}</p>
+  <p> 감독 : {{ movie.director }}  </p>
   <p>줄거리 : {{ movie.summary }}</p>
   <p>장르 :
     {% for genre in movie.genres.all %}
