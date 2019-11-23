@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, JsonResponse, HttpResponseBadRequest
 from .models import Movie, Rating
 from .forms import RatingForm
 
@@ -44,10 +44,17 @@ def review_delete(request, movie_pk, review_pk):
 
 @login_required
 def like(request, movie_pk):
-    movie = get_object_or_404(Movie, pk=movie_pk)
-    user = request.user
-    if movie.like_users.filter(pk=user.pk).exists():
-        movie.like_users.remove(user)
+    if request.is_ajax():
+        movie = get_object_or_404(Movie, pk=movie_pk)
+        user = request.user
+        if movie.like_users.filter(pk=user.pk).exists():
+            movie.like_users.remove(user)
+            liked = False
+        else:
+            movie.like_users.add(user)
+            liked = True
+        
+        context = {'liked': liked, 'count': movie.like_users.count()}
+        return JsonResponse(context)
     else:
-        movie.like_users.add(user)
-    return redirect('movies:detail', movie_pk)
+        return HttpResponseBadRequest()
