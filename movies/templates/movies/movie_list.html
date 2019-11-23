@@ -1,9 +1,56 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Movie List</h1>
-  {% for movie in movies %}
-    <h1>{{ movie.title }}</h1>
-    <a href="{% url 'movies:detail' movie.pk %}"><img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" alt="{{ movie.title }}포스터" width="300px"></a>
-  {% endfor %}
+
+  <div class="container">
+    <div class="row">
+      {% for movie in movies %}
+        <div class="card col-3 col-sm-12 col-md-6 col-lg-4 p-0">
+          <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" class="card-img-top" data-toggle="modal" data-target="#myModal" alt="{{ movie.title }}포스터" height="80%">
+          <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+ 
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Modal Header</h4>
+          </div>
+          <div class="modal-body">
+            <p>Some text in the modal.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+ 
+      </div>
+    </div>     
+          <div class="card-body">
+            <a href="{% url 'movies:detail' movie.pk %}"><p class="card-title">{{ movie.title }}</p></a>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
 {% endblock %}
+{% block script %}
+  $(document).ready(function(){
+    
+     $("body").on("click","#btn",function(){
+            
+          $("#myModal").modal("show");
+      
+          //appending modal background inside the blue div
+          $('.modal-backdrop').appendTo('.blue');   
+    
+          //remove the padding right and modal-open class from the body tag which bootstrap adds when a modal is shown
+          $('body').removeClass("modal-open")
+          $('body').css("padding-right","");     
+      });
+ 
+	});
+
+{% endblock script %}
