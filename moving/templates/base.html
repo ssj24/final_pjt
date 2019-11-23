@@ -17,6 +17,8 @@
   <!-- 폰트어썸 -->
   <script src="https://kit.fontawesome.com/b9444c6aee.js" crossorigin="anonymous"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 	<link rel="stylesheet" href="{% static 'accounts/css/first.css' %}">
 	<title>Moving</title>
   <style>
@@ -28,7 +30,7 @@
 	.sujee
 	{
 		background-color:blue;
-		position:relative;// so that .modal & .modal-backdrop gets positioned relative to it
+		position:relative;
 	}
 	
 	.bluck 
@@ -40,7 +42,17 @@
 	.modal, .modal-backdrop {
 			position: absolute !important;
 	}
-	a:link, a:hover, a:visted, a:active {
+	a:link {
+		text-decoration: none;
+		color: #000;
+	}
+	a:hover {
+		text-decoration: none;
+	}
+	a:visited {
+		text-decoration: none;
+	}
+	a:active {
 		text-decoration: none;
 	}
 
@@ -85,6 +97,29 @@
 
   <!-- bootstrap -->
   {% bootstrap_javascript jquery='full' %}
+
+	<script>
+  const likebuttons = document.querySelectorALl('.like-button')
+		likebuttons.forEach(button => {
+			button.addEventListener('click', function (event) {
+				const movieId = event.target.dataset.id
+				axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+				axios.defaults.xsrfCookieName = 'csrftoken'
+				axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+				axios.post(`/movies/${movieId}/like/`)
+					.then(response => {
+						document.querySelector(`#like-count-${movieId}`).innerText = response.data.count
+						if (response.data.liked) {
+							event.target.style.color = 'crimson'
+						} else {
+							event.target.style.color = 'black'
+						}
+					})
+					.catch(error => console.log(error))
+			})
+		})
+	</script>
+
 </body>
 
 </html>

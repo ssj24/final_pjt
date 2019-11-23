@@ -19,10 +19,10 @@
   <h1>좋아요</h1>
     <p class="card-text">
       <a href="{% url 'movies:like' movie.pk %}">
-        {% if  user in movie.like_users.all %}
-          <i class="fas fa-heart" style="color: crimson;"></i>
+        {% if user in movie.like_users.all %}
+          <i class="fas fa-heart like-button" style="color: crimson;" data-id="{{ movie.pk }}"></i>
         {% else %}
-          <i class="fas fa-heart" style="color: black;"></i>
+          <i class="fas fa-heart like-button" style="color: black;" data-id="{{ movie.pk }}"></i>
         {% endif %}
       </a>
     {{ movie.like_users.all|length }}명이 이 글을 좋아합니다.
@@ -56,4 +56,6 @@
   <hr>
 
 
-{% endblock %}
+
+
+{% endblock content %}
