@@ -9,7 +9,6 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   {% block head %}
 	{% endblock head %}
-	<meta name="google-signin-client_id" content="424095606158-folfa3glj31ibqvhipd0f70krqs5bbt6.apps.googleusercontent.com">
 	<!-- 파비콘 -->
   <link rel="shortcut icon" href="{% static 'accounts/favicon/google-glasses.png' %}">
   
@@ -17,8 +16,8 @@
   {% bootstrap_css %}
   <!-- 폰트어썸 -->
   <script src="https://kit.fontawesome.com/b9444c6aee.js" crossorigin="anonymous"></script>
-  <script src="{% static 'movies/js/nav.js' %}"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
+	<link rel="stylesheet" href="{% static 'accounts/css/first.css' %}">
 	<title>Moving</title>
   <style>
 	
@@ -41,50 +40,16 @@
 	.modal, .modal-backdrop {
 			position: absolute !important;
 	}
-
-	@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,300");
-
-	.simple-tab-nav{
-		margin-bottom: 20px;
-		&.simple-nav{
-			.nav-link{
-				border:0px;
-				padding: 10px 15px;
-				font-weight: 700;
-				&:first-child{
-					padding-left: 0;
-				}
-				&.active{
-					
-				}
-			}
-		}
-		&.center-nav{
-			margin-left: auto;
-			margin-right: auto;
-			display: block;
-			text-align: center;
-			.nav-link{
-				display: inline-block;
-			}
-		}
-		.nav-link{
-			color: #555555;
-			border-bottom: 3px solid #fff;
-			padding: 10px 15px;
-			&.active{
-				color: #DD4F43;
-				border-color: #DD4F43;
-				font-weight: 700;
-			}
-		}
+	a:link, a:hover, a:visted, a:active {
+		text-decoration: none;
 	}
+
   </style>
 </head>
 
 <body>
 
-  <!-- nav-->
+  <!-- nav--><br><br><br><br>
 	<div class="container">
 		<nav>
 			<div class="nav simple-tab-nav " id="nav-tab" role="tablist">
@@ -98,8 +63,8 @@
 				{% endif %}
 			</div>
 		</nav>
-			
-		<!-- <div class="tab-content" id="nav-tabContent">
+		<!--
+		<div class="tab-content" id="nav-tabContent">
 			<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-movie-tab">
 				<p> One  ipsum dolor, sit amet consectetur adipisicing elit. Autem, sint. </p>
 			</div>
