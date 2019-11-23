@@ -1,31 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
   <div class="container">
     <div class="row">
       {% for movie in movies %}
-        <div class="card col-3 col-sm-12 col-md-6 col-lg-4 p-0">
-          <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" class="card-img-top" data-toggle="modal" data-target="#myModal" alt="{{ movie.title }}포스터" height="80%">
-          <div id="myModal" class="modal fade" role="dialog">
-      <div class="modal-dialog">
- 
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Modal Header</h4>
+        {% comment %} <div class="card col-3 col-sm-12 col-md-6 col-lg-4 p-0"> {% endcomment %}
+        <div class="card col-2 p-0">
+          <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" class="card-img-top" data-toggle="{{movie.title}}" data-target="#{{movie.title}}" alt="{{ movie.title }}포스터" height="70%">
+          <div id="{{movie.title}}" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+    
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+              </div>
+              <div class="modal-body">
+                <p>Some text in the modal.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+    
           </div>
-          <div class="modal-body">
-            <p>Some text in the modal.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-        </div>
- 
-      </div>
-    </div>     
+        </div>     
           <div class="card-body">
             <a href="{% url 'movies:detail' movie.pk %}"><p class="card-title">{{ movie.title }}</p></a>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>

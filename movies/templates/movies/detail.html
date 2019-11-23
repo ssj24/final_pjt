@@ -5,7 +5,7 @@
   <hr>
   <h1>영화 정보</h1>
   <p>영화 제목 : {{ movie.title }}</p>
-  <img src="{{ movie.poster_url }}" alt="#" width="300px">
+  <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" alt="#" width="300px">
   <p>관객수 : {{ movie.audience }}</p>
   <p>개봉일 : {{ movie.start_date }}</p>
   <p>감독 : {{ movie.director }}</p>
