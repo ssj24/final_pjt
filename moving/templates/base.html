@@ -4,75 +4,126 @@
 <html lang="ko">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  {% block head %}
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	{% block head %}
 	{% endblock head %}
 	<!-- 파비콘 -->
-  <link rel="shortcut icon" href="{% static 'accounts/favicon/google-glasses.png' %}">
-  
-  <!-- 부트스트랩-->
-  {% bootstrap_css %}
-  <!-- 폰트어썸 -->
-  <script src="https://kit.fontawesome.com/b9444c6aee.js" crossorigin="anonymous"></script>
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
+	<link rel="shortcut icon" href="{% static 'accounts/favicon/google-glasses.png' %}">
+
+	<!-- 부트스트랩-->
+	{% bootstrap_css %}
+	<!-- 폰트어썸 -->
+	<script src="https://kit.fontawesome.com/b9444c6aee.js" crossorigin="anonymous"></script>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-	<!--
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	-->
+
+
+	<link href="https://fonts.googleapis.com/css?family=Carrois+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
+
 	<link rel="stylesheet" href="{% static 'accounts/css/first.css' %}">
 	<title>Moving</title>
+
   <style>
 
-	a:link {
-		text-decoration: none;
+	* {
+		font-family: 'Nanum Gothic Coding', 'Carrois Gothic', sans-serif;
+		
+	}
+
+	.suj {
+		background-color: #ff0000;
+	}
+	
+	.sujee
+	{
+		background-color:blue;
+		position:relative;
+	}
+	
+	.bluck 
+	{
+		width:100%;
+		height:200px;
+	}
+	
+	.modal, .modal-backdrop {
+			position: absolute !important;
+	}
+	
+	.logo {
+	}
+	.Nlogo {
+	}
+	.nav-c {
+
 		color: #000;
 	}
-	a:hover {
-		text-decoration: none;
+	.nav-c:hover {
+		text-decoration: overline underline solid red !important;
+		font-size: 1.3rem;
+		font-weight: bolder;
+		color: #000;
 	}
-	a:visited {
-		text-decoration: none;
+	
+	.navi {
+		border: 0;
+		background-color: #fff;
+		
+		
 	}
-	a:active {
-		text-decoration: none;
+	.navi:hover {
+		text-decoration: overline underline solid red !important;
+		font-size: 1.3rem;
+		font-weight: bolder;
+		color: #000;
 	}
+
+	.hr1 {
+		display: block;
+		margin : 1em 0;
+		border-style: inset;
+		
+	}
+	{% block css %}
+	{% endblock css %}
 
 
 </style>
 </head>
 
 <body>
+	<div class="container-fluid">
+		<div class="row justify-content-between no-gutters">
+			<br><br><br>
+			<div id="logo" class="d-inline col-1 logo">LOGO</div>
+			<div class="col-3"></div>
+			<nav class="d-inline col-8 Nlogo">
+			<br>
+				<div class="nav simple-tab-nav row justify-content-end" id="nav-tab" role="tablist">
+					<a class="nav-item nav-link active nav-c" id="nav-movie-tab" href="{% url 'movies:list' %}" role="tab" aria-controls="nav-home" aria-selected="true">MOVIES</a>
+					{% if user.is_authenticated %}
+						<a class="nav-item nav-link active nav-c" id="nav-logout-tab" href="{% url 'accounts:logout' %}" role="tab" aria-controls="nav-profile" aria-selected="false">LOGOUT</a>
+						<a class="nav-item nav-link active nav-c" id="nav-profile-tab" href="{% url 'accounts:user_detail' user.pk %}" role="tab" aria-controls="nav-profile" aria-selected="false">PROFILE</a>
+						<a class="nav-item nav-link active nav-c" id="nav-profile-tab" href="{% url 'accounts:update' %}" role="tab" aria-controls="nav-profile" aria-selected="false">정보수정</a>
+						<a class="nav-item nav-link active nav-c" id="nav-profile-tab" href="{% url 'accounts:change_password' %}" role="tab" aria-controls="nav-profile" aria-selected="false">비밀번호 변경</a>
+						<a class="nav-item nav-link active nav-c" id="nav-profile-tab" role="tab" aria-controls="nav-profile" aria-selected="false">
+							<form action="{% url 'accounts:delete' %}" method='POST' style="display: inline;">
+								{% csrf_token %}
+								<input type="submit" value="회원탈퇴" class="navi">
+							</form>
+						</a>
+					{% else %}
+						<a class="nav-item nav-link nav-c" id="nav-signup-tab" href="{% url 'accounts:signup' %}" role="tab" aria-controls="nav-contact" aria-selected="false">SIGNUP</a>
+						<a class="nav-item nav-link nav-c" id="nav-login-tab" href="{% url 'accounts:login' %}" role="tab" aria-controls="nav-contact" aria-selected="false">LOGIN</a>
+					{% endif %}
+				</div>
+			</nav>
 
-  <!-- nav--><br><br><br><br>
-	<div class="container">
-		<nav>
-			<div class="nav simple-tab-nav " id="nav-tab" role="tablist">
-				<a class="nav-item nav-link active" id="nav-movie-tab" href="{% url 'movies:list' %}" role="tab" aria-controls="nav-home" aria-selected="true">Movies</a>
-				{% if user.is_authenticated %}
-					<a class="nav-item nav-link" id="nav-logout-tab" href="{% url 'accounts:logout' %}" role="tab" aria-controls="nav-profile" aria-selected="false">LogOut</a>
-					<a class="nav-item nav-link" id="nav-profile-tab" href="{% url 'accounts:user_detail' user.pk %}" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
-				{% else %}
-					<a class="nav-item nav-link" id="nav-signup-tab" href="{% url 'accounts:signup' %}" role="tab" aria-controls="nav-contact" aria-selected="false">SignUp</a>
-					<a class="nav-item nav-link" id="nav-login-tab" href="{% url 'accounts:login' %}" role="tab" aria-controls="nav-contact" aria-selected="false">Login</a>
-				{% endif %}
-			</div>
-		</nav>
-		<!--
-		<div class="tab-content" id="nav-tabContent">
-			<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-movie-tab">
-				<p> One  ipsum dolor, sit amet consectetur adipisicing elit. Autem, sint. </p>
-			</div>
-			<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-				<p> Two sum dolor, sit amet consectetur adipisicing elit. Autem, sint. </p>
-			</div>
-			<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-signup-tab">
-				<p> Three m dolor, sit amet consectetur adipisicing elit. Autem, sint. </p>
-			</div>
-		</div>
-		-->
-	</div>
+<body>
+  {% block carousel %}
+	{% endblock  %}
 
   <div class="container">
     {% block content %}
@@ -81,9 +132,13 @@
 
   <!-- bootstrap -->
   {% bootstrap_javascript jquery='full' %}
+	
+	
+	{% block script %}
+	{% endblock script %}
 
 	<script>
-  const likebuttons = document.querySelectorALl('.like-button')
+		const likebuttons = document.querySelectorALl('.like-button')
 		likebuttons.forEach(button => {
 			button.addEventListener('click', function (event) {
 				const movieId = event.target.dataset.id
@@ -103,6 +158,7 @@
 			})
 		})
 	</script>
+
 
 </body>
 

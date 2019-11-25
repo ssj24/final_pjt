@@ -2,13 +2,18 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import Http404, HttpResponse, JsonResponse, HttpResponseBadRequest
-from .models import Movie, Rating, Cast
+from .models import Movie, Rating, Cast, Genre
 from .forms import RatingForm
 
 # Create your views here.
+def index(request):
+    return render(request, 'movies/index.html')
+
+
 def movie_list(request):
     movies = Movie.objects.all()
-    context = {'movies': movies,}
+    genres = Genre.objects.all()
+    context = {'movies': movies, 'genres': genres}
     return render(request, 'movies/movie_list.html', context)
 
 
@@ -16,7 +21,8 @@ def detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     reviews = movie.rating_set.all()
     review_form = RatingForm()
-    context = {'movie': movie, 'reviews': reviews, 'review_form': review_form,}
+    casts = movie.cast_set.all()
+    context = {'movie': movie, 'reviews': reviews, 'review_form': review_form, 'casts':casts,}
     return render(request, 'movies/detail.html', context)
 
 
@@ -35,26 +41,25 @@ def review_create(request, movie_pk):
 @require_POST
 def review_delete(request, movie_pk, review_pk):
     if request.user.is_authenticated:
-        review = get_object_or_404(Review, pk=review_pk)
+        review = get_object_or_404(Rating, pk=review_pk)
         if review.user == request.user:
             review.delete()
         return redirect('movies:detail', movie_pk)
     return HttpResponse('You ar Unauthorized', status=401)
 
 
-@login_required
 def like(request, movie_pk):
     if request.is_ajax():
         movie = get_object_or_404(Movie, pk=movie_pk)
-        user = request.user
-        if movie.like_users.filter(pk=user.pk).exists():
-            movie.like_users.remove(user)
+        # user = request.user
+        if movie.like_users.filter(pk=request.user.pk).exists():
+            movie.like_users.remove(request.user)
             liked = False
         else:
-            movie.like_users.add(user)
+            movie.like_users.add(request.user)
             liked = True
         
-        context = {'liked': liked, 'count': movie.like_users.count()}
+        context = {'liked': liked, 'count': movie.like_users.count(),}
         return JsonResponse(context)
     else:
         return HttpResponseBadRequest()

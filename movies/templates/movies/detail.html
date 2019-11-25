@@ -1,61 +1,112 @@
 {% extends 'base.html' %}
-
+{% load bootstrap4 %}
 {% block content %}
-  <a href="{% url 'movies:list' %}">[BACK]</a>
-  <hr>
-  <h1>영화 정보</h1>
-  <p>영화 제목 : {{ movie.title }}</p>
-  <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" alt="#" width="300px">
-  <p>관객수 : {{ movie.audience }}</p>
-  <p>개봉일 : {{ movie.start_date }}</p>
-  <p> 감독 : {{ movie.director }}  </p>
-  <p>줄거리 : {{ movie.summary }}</p>
-  <p>장르 :
-    {% for genre in movie.genres.all %}
-      {{ genre }}
-    {% endfor %}
-  </p>
-  <hr>
-  <h1>좋아요</h1>
-    <p class="card-text">
-      <a href="{% url 'movies:like' movie.pk %}">
-        {% if user in movie.like_users.all %}
-          <i class="fas fa-heart like-button" style="color: crimson;" data-id="{{ movie.pk }}"></i>
-        {% else %}
-          <i class="fas fa-heart like-button" style="color: black;" data-id="{{ movie.pk }}"></i>
-        {% endif %}
-      </a>
-    {{ movie.like_users.all|length }}명이 이 글을 좋아합니다.
-    </p>
-  <hr>
-  <h1>리뷰 목록</h1>
-  {% for review in reviews %}
-    <div>
-      평점 : {{ review.score }} / 댓글 : {{ review.comment }} / 작성자 : {{ review.user }}
-      {% if review.user == request.user %}
-        <form action="{% url 'movies:review_delete' movie.pk review.pk %}" method="POST">
-          {% csrf_token %}
-          <input type="submit" value="DELETE">
-        </form>
-      {% endif %}
-  {% empty %}
-    <p><b>댓글이 없습니다.</b></p>
-  {% endfor %}
-  </div>
-  <hr>
-  <h1>리뷰 작성</h1>
-  {% if user.is_authenticatied %}
-    <form action="{% url 'movies:review_create' movie.pk %}" method="POST">
-      {% csrf_token %}
-      {{ review_form }}
-      <input type="submit" value="submit">
-    </form>
-  {% else %}
-    <a href="#">[댓글을 작성하려면 로그인하세요.]</a>
-  {% endif %}
-  <hr>
 
+<a href="{% url 'movies:list' %}" class="btn btn-outline-info">BACK</a>
+
+
+<div class="card mb-3">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" class="card-img" alt="{{ movie.title }}image">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h4 class="card-title">{{ movie.title }}</h4>
+        
+        <p class="card-text">{{ movie.summary }}</p>
+        <div class="align-bottom">
+        <p class="card-text"><small class="text-muted">개봉일: {{ movie.start_date }} 감독: {{ movie.director }} 장르: 
+          {% for genre in movie.genres.all %}
+            {{ genre }}
+          {% endfor %}</small></p>
+        <p class="card-text text-right align-bottom">
+          {% if user.is_authenticated %}
+            {% if user in movie.like_users.all %}
+            <i class="fas fa-heart like-button" style="color: crimson;" data-id="{{ movie.pk }}"></i>
+            {% else %}
+            <i class="fas fa-heart like-button" style="color: black;" data-id="{{ movie.pk }}"></i>
+            {% endif %}
+          {% endif %}
+          <span id="like-count-{{ movie.pk }}">{{ movie.like_users.count }}</span>명이 이 영화를 좋아합니다.
+        </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p><a href="http://www.youtube.com/embed/{{movie.teaser}}">티져보기</a></p>
+
+<hr>
+<h1>주요 출연진</h1>
+<div class="card-deck">
+  {% for cast in casts %}
+  <div class="card">
+    <img src="http://image.tmdb.org/t/p/original/{{ cast.profile_path }}" class="card-img-top" alt="#">
+    <div class="card-body">
+      <h5 class="card-title">{{ cast.name }}</h5>
+      <p class="card-text">{{ cast.character }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+<hr>
+{% for review in reviews %}
+<div>
+  <span class="d-inline"> {{ review.user }} | {{ review.score }}점 {{ review.comment }}</span>
+  {% if review.user == request.user %}
+  <form action="{% url 'movies:review_delete' movie.pk review.pk %}" method="POST" class="d-inline">
+    {% csrf_token %}
+    <input type="submit" value="DELETE" class="btn btn-outline-danger p-1">
+  </form>
+  {% endif %}
+{% empty %}
+  <p><b>댓글이 없습니다.</b></p>
+</div>
+{% endfor %}
+
+<div class="container">
+<hr>
+{% if user.is_authenticated %}
+<form action="{% url 'movies:review_create' movie.pk %}" method="POST">
+  {% csrf_token %}
+  {% bootstrap_form review_form %}
+  <input type="submit" value="submit" class="btn btn-outline-info">
+</form>
+{% else %}
+<a href="#">[댓글을 작성하려면 로그인하세요.]</a>
+{% endif %}
+</div>
+<br>
 
 
 
 {% endblock content %}
+{% block script %}
+<script>
+  const likebuttons = document.querySelectorAll('.like-button')
+  likebuttons.forEach(button => {
+    button.addEventListener('click', function (event) {
+
+      const movieId = event.target.dataset.id
+      console.log(typeof (movieId))
+      // 해상 상세 게시글의 좋아요 요청을 보낸다.
+      axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+      axios.defaults.xsrfCookieName = 'csrftoken'
+      axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+      axios.post(`/movies/${movieId}/like/`)
+        .then(response => {
+          console.log(response)
+          document.querySelector(`#like-count-${movieId}`).innerText = response.data.count
+          if (response.data.liked) {
+            event.target.style.color = 'crimson'
+          } else {
+            event.target.style.color = 'black'
+          }
+        })
+    })
+  })
+</script>
+{% endblock script %}
