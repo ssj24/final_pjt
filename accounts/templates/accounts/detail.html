@@ -2,7 +2,8 @@
 
 {% block content %}
   <br>
-  <h1>{{ auth_user.username }}</h1>
+  <h2>{{ auth_user.username }}</h2>
+  <hr>
   {% for review in reviews %}
     <a href="{% url 'movies:detail' review.movie.pk %}"><h3>{{ review.movie.title }}</h3></a>
     
@@ -11,10 +12,10 @@
   {% endfor %}
 
   {% with followers=auth_user.follow_user.all followings=auth_user.following_user.all %}
-    <h3>
-    팔로워: {{ followers|length }}명 |
-    팔로잉: {{ followings|length }}명
-    </h3>
+    <h5>
+    팔로워: {{ followers|length }} 
+    팔로잉: {{ followings|length }}
+    </h5>
     <select name="" id="">
       {% for following in followings %}
         <a href="{% url 'accounts:user_detail' following.pk %}"><option value="following.username">{{following.username}}</option></a>
@@ -24,7 +25,7 @@
     <hr>
     {% if user != auth_user %}
       {% if user in followers %}
-        <a href="{% url 'accounts:follow' auth_user.pk %}" role="button" class="btn btn-warn">UnFollow</a>
+        <a href="{% url 'accounts:follow' auth_user.pk %}" role="button" class="btn btn-danger">UnFollow</a>
       {% else %}
         <a href="{% url 'accounts:follow' auth_user.pk %}" role="button" class="btn btn-danger">Follow</a>
 

@@ -2,12 +2,14 @@
 {% load bootstrap4 %}
 
 {% block content %}
-<h1>회원가입</h1>
-
-<form action="" method="POST">
-  {% csrf_token %}
-  {% bootstrap_form form %}
-  {% buttons submit='회원가입' reset="Cancel" %}{% endbuttons %}
-</form>
-  <a href="{% url 'accounts:index' %}" class="btn btn-info">BACK</a>
+  <h3>회원가입</h3>
+  <br>
+  <form action="" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <input type="submit" class="btn btn-outline-info formbtn" value="회원가입">
+    
+    <a href="{% url 'accounts:index' %}" class="btn btn-outline-info formbtn">BACK</a>
+  </form>
+  
 {% endblock %}

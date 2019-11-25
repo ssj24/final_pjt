@@ -41,26 +41,25 @@ def review_create(request, movie_pk):
 @require_POST
 def review_delete(request, movie_pk, review_pk):
     if request.user.is_authenticated:
-        review = get_object_or_404(Review, pk=review_pk)
+        review = get_object_or_404(Rating, pk=review_pk)
         if review.user == request.user:
             review.delete()
         return redirect('movies:detail', movie_pk)
     return HttpResponse('You ar Unauthorized', status=401)
 
 
-@login_required
 def like(request, movie_pk):
     if request.is_ajax():
         movie = get_object_or_404(Movie, pk=movie_pk)
-        user = request.user
-        if movie.like_users.filter(pk=user.pk).exists():
-            movie.like_users.remove(user)
+        # user = request.user
+        if movie.like_users.filter(pk=request.user.pk).exists():
+            movie.like_users.remove(request.user)
             liked = False
         else:
-            movie.like_users.add(user)
+            movie.like_users.add(request.user)
             liked = True
         
-        context = {'liked': liked, 'count': movie.like_users.count()}
+        context = {'liked': liked, 'count': movie.like_users.count(),}
         return JsonResponse(context)
     else:
         return HttpResponseBadRequest()
