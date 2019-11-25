@@ -1,14 +1,37 @@
 {% extends 'base.html' %}
+
+{% block css %}
+.button:hover{
+  color: #fff !important;
+}
+{% endblock css %}
 {% block content %}
   <br><br>
+  <p style="text-align: right;"><span style="font-weight: bold; font-color: #ff000;">{{users|length}}</span>명</p>
+  
   {% for user in users %}
-    <br>
-    <a href="{% url 'accounts:user_detail' user.pk %}">
-      {{ user.username }}
-    </a>
-    <br>
-    <br>
-    <hr>
-  {% endfor %}
+    
+    
 
+    <div class="card text-center">
+      
+      <div class="card-body">
+        <h4 class="card-title">{{user.username}}</h4>
+        <p class="card-text">{{user.email}}</p>
+        <a href="{% url 'accounts:user_detail' user.pk %}" class="btn btn-outline-primary button p-1">Detail</a>
+      </div>
+      {% if users.is_authenticated %}
+        <div class="card-footer text-muted">
+          {% if user.is_staff %}
+          관리자
+          
+          {% elif not user.is_staff %}
+          일반 유저
+          
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+    <br>
+  {% endfor %}
 {% endblock %}

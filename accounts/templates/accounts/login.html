@@ -3,18 +3,17 @@
 {% load socialaccount %}
 
 {% block content %}
-
-  <h1>로그인</h1>
+  <h3>로그인</h3>
+  <br>
+  <a class="btn btn-outline-warning" href="{% provider_login_url "kakao" %}">KAKAO</a>
+  <a class="btn btn-outline-primary" href="{% provider_login_url "github" %}">GITHUB</a>
+  <a class="btn btn-outline-success" href="{% provider_login_url "naver" %}">NAVER</a>
+  <br><br>
   <form action="" method="POST">
     {% csrf_token %}
     {% bootstrap_form form %}
-    {% buttons submit='로그인' reset="Cancel" %}{% endbuttons %}
+    <input type="submit" value="로그인" class="btn btn-outline-info d-inline">
+    <a href="{% url 'accounts:index' %}" class="btn btn-outline-info d-inline p-2 m-1" style="font-size: 1.2em;">BACK</a>
   </form>
-  <a class="btn btn-warning" href="{% provider_login_url "kakao" %}">KAKAO</a>
-  <a class="btn btn-warning" href="{% provider_login_url "github" %}">github</a>
-  <a class="btn btn-warning" href="{% provider_login_url "naver" %}">naver</a>
-  {% comment %} <a href="{% url 'social:begin' 'github' %}">GITHUB</a> {% endcomment %}
-  {% comment %} <div class="g-signin2" data-onsuccess="onSignIn"></div> {% endcomment %}
-
-  <a href="{% url 'accounts:index' %}" class="btn btn-info">BACK</a>
+  
 {% endblock content %}
