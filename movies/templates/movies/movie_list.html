@@ -61,6 +61,7 @@
 
     <div class="row">
       {% for movie in movies %}
+
         <a href="{% url 'movies:detail' movie.pk %}">
         <div class="card col-3 p-0" id="b">
           
@@ -85,6 +86,7 @@
               </div>
 
             </div>
+
           </div>
           
         </div>
