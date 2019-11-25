@@ -24,17 +24,11 @@ for i in range(3):
         movieId = response_dict['results'][i]['id']
         movies.append(movieId)
 
+cnt = 0
 for i in range(len(movies)):
 # for i in range(1):
     movie_id = movies[i]
-
-    # model : Cast
-    cast_tmp = {}
-    cast_tmp['model'] = 'movies.cast'
-    cast_tmp['pk'] = movies[i]
     base_url = 'https://api.themoviedb.org/3/movie/'
-
-    ## credits
     url = base_url + f'{movie_id}/credits?api_key={key}'
 
     response = requests.get(url)
@@ -42,6 +36,10 @@ for i in range(len(movies)):
     tmps = response_dict["cast"]
 
     for tmp in tmps:
+        cast_tmp = {}
+        cast_tmp['model'] = 'movies.cast'
+        cast_tmp['pk'] = cnt
+
         movie = movies[i]
         character = tmp["character"]
         name = tmp["name"]
@@ -58,6 +56,7 @@ for i in range(len(movies)):
             'profile_path': profile_path,
         }
         result.append(cast_tmp)
+        cnt += 1
 
 with open('casts.json', 'w', encoding='utf-8') as f:
     json.dump(result, f, ensure_ascii=False, indent=4)
