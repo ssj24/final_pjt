@@ -4,24 +4,25 @@
 <html lang="ko">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  {% block head %}
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	{% block head %}
 	{% endblock head %}
 	<!-- 파비콘 -->
-  <link rel="shortcut icon" href="{% static 'accounts/favicon/google-glasses.png' %}">
-  
-  <!-- 부트스트랩-->
-  {% bootstrap_css %}
-  <!-- 폰트어썸 -->
-  <script src="https://kit.fontawesome.com/b9444c6aee.js" crossorigin="anonymous"></script>
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
+	<link rel="shortcut icon" href="{% static 'accounts/favicon/google-glasses.png' %}">
+
+	<!-- 부트스트랩-->
+	{% bootstrap_css %}
+	<!-- 폰트어썸 -->
+	<script src="https://kit.fontawesome.com/b9444c6aee.js" crossorigin="anonymous"></script>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 	<link href="https://fonts.googleapis.com/css?family=Carrois+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="{% static 'accounts/css/first.css' %}">
 	<title>Moving</title>
+
   <style>
 	* {
 		font-family: 'Nanum Gothic Coding', 'Carrois Gothic', sans-serif;
@@ -114,8 +115,11 @@
 					{% endif %}
 				</div>
 			</nav>
-		</div>
-	</div>
+
+<body>
+  {% block carousel %}
+	{% endblock  %}
+
   <div class="container">
     {% block content %}
     {% endblock content %}
@@ -127,6 +131,30 @@
 	
 	{% block script %}
 	{% endblock script %}
+
+	<script>
+		const likebuttons = document.querySelectorALl('.like-button')
+		likebuttons.forEach(button => {
+			button.addEventListener('click', function (event) {
+				const movieId = event.target.dataset.id
+				axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+				axios.defaults.xsrfCookieName = 'csrftoken'
+				axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+				axios.post(`/movies/${movieId}/like/`)
+					.then(response => {
+						document.querySelector(`#like-count-${movieId}`).innerText = response.data.count
+						if (response.data.liked) {
+							event.target.style.color = 'crimson'
+						} else {
+							event.target.style.color = 'black'
+						}
+					})
+					.catch(error => console.log(error))
+			})
+		})
+	</script>
+
+
 </body>
 
 </html>

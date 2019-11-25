@@ -2,13 +2,18 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import Http404, HttpResponse, JsonResponse, HttpResponseBadRequest
-from .models import Movie, Rating, Cast
+from .models import Movie, Rating, Cast, Genre
 from .forms import RatingForm
 
 # Create your views here.
+def index(request):
+    return render(request, 'movies/index.html')
+
+
 def movie_list(request):
     movies = Movie.objects.all()
-    context = {'movies': movies,}
+    genres = Genre.objects.all()
+    context = {'movies': movies, 'genres': genres}
     return render(request, 'movies/movie_list.html', context)
 
 
@@ -16,7 +21,8 @@ def detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     reviews = movie.rating_set.all()
     review_form = RatingForm()
-    context = {'movie': movie, 'reviews': reviews, 'review_form': review_form,}
+    casts = movie.cast_set.all()
+    context = {'movie': movie, 'reviews': reviews, 'review_form': review_form, 'casts':casts,}
     return render(request, 'movies/detail.html', context)
 
 

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block content %}
+
 <a href="{% url 'movies:list' %}" class="btn btn-outline-info">BACK</a>
 
 
@@ -33,6 +34,21 @@
       </div>
     </div>
   </div>
+</div>
+<p><a href="http://www.youtube.com/embed/{{movie.teaser}}">티져보기</a></p>
+
+<hr>
+<h1>주요 출연진</h1>
+<div class="card-deck">
+  {% for cast in casts %}
+  <div class="card">
+    <img src="http://image.tmdb.org/t/p/original/{{ cast.profile_path }}" class="card-img-top" alt="#">
+    <div class="card-body">
+      <h5 class="card-title">{{ cast.name }}</h5>
+      <p class="card-text">{{ cast.character }}</p>
+    </div>
+  </div>
+  {% endfor %}
 </div>
 
 
@@ -90,7 +106,6 @@
             event.target.style.color = 'black'
           }
         })
-
     })
   })
 </script>
