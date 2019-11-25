@@ -1,21 +1,35 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
+{% load static %}
 {% load socialaccount %}
-
+{% block css %}
+body {
+  background: url('{% static 'movies/img/라이온킹.jpg' %}');
+  background-size: 100%;
+}
+.backg {
+  background-color: #fff;
+  opacity: 0.85;
+  border-radius: 20px;
+}
+{% endblock css %}
 {% block content %}
+<br><br><br><br><br>
+  <div class="row justify-content-center">
+    <div class="col-5 p-3 backg">
+      <h3>로그인</h3>
+      <br>
+      <a class="btn btn-outline-warning" href="{% provider_login_url "kakao" %}">KAKAO</a>
+      <a class="btn btn-outline-primary" href="{% provider_login_url "github" %}">GITHUB</a>
+      <a class="btn btn-outline-success" href="{% provider_login_url "naver" %}">NAVER</a>
+      <br><br>
 
-  <h3>로그인</h3>
-  <br>
-  <a class="btn btn-outline-warning" href="{% provider_login_url "kakao" %}">KAKAO</a>
-  <a class="btn btn-outline-primary" href="{% provider_login_url "github" %}">GITHUB</a>
-  <a class="btn btn-outline-success" href="{% provider_login_url "naver" %}">NAVER</a>
-  <br><br>
-
-  <form action="" method="POST">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    <input type="submit" value="로그인" class="btn btn-outline-info d-inline">
-    <a href="{% url 'accounts:index' %}" class="btn btn-outline-info d-inline p-2 m-1" style="font-size: 1.2em;">BACK</a>
-  </form>
-
+      <form action="" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit" value="로그인" class="btn btn-outline-info d-inline">
+        <a href="{% url 'accounts:index' %}" class="btn btn-outline-info d-inline p-2 m-1" style="font-size: 1.2em;">BACK</a>
+      </form>
+    </div>
+  </div>
 {% endblock content %}

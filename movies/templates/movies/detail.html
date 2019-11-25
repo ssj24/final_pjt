@@ -8,7 +8,7 @@
 <div class="card mb-3">
   <div class="row no-gutters">
     <div class="col-md-4">
-      <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" class="card-img" alt="{{ movie.title }}image">
+      <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" class="card-img align-center" alt="{{ movie.title }}image">
     </div>
     <div class="col-md-8">
       <div class="card-body">
@@ -16,7 +16,9 @@
         
         <p class="card-text">{{ movie.summary }}</p>
         <div class="align-bottom">
-        <p class="card-text"><small class="text-muted">개봉일: {{ movie.start_date }} 감독: {{ movie.director }} 장르: 
+        <p class="card-text text-right"><small class="text-muted">개봉일: {{ movie.start_date }}</small></p>
+        <p class="card-text text-right"><small class="text-muted">감독: {{ movie.director }}  </small></p>
+        <p class="card-text text-right"><small class="text-muted">장르: 
           {% for genre in movie.genres.all %}
             {{ genre }}
           {% endfor %}</small></p>
@@ -35,8 +37,11 @@
     </div>
   </div>
 </div>
-<p><a href="http://www.youtube.com/embed/{{movie.teaser}}">티져보기</a></p>
+{% if movie.teaser != '' %}
+<iframe width="560" height="315" src="http://www.youtube.com/embed/{{movie.teaser}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% else %}
 
+{% endif %}
 <hr>
 <h1>주요 출연진</h1>
 <div class="card-deck">
