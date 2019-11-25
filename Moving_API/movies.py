@@ -68,8 +68,17 @@ for i in range(len(movies)):
             break
 
     ## videos
-    # teaser = response_dict["video"]
-   
+    base_url_video = 'https://api.themoviedb.org/3/movie/'
+    url_video = base_url_video + f'{movie_id}/videos?api_key={key}&language=ko-KR'
+    
+    response = requests.get(url_video)
+    response_dict = response.json()
+
+    if response_dict["results"]:
+        teaser = response_dict["results"][0]["key"]
+    else:
+        teaser = ""
+        
     movie_tmp['fields'] = {
         'title': title,
         'audience': audience,
@@ -78,7 +87,7 @@ for i in range(len(movies)):
         'poster_url': poster_url,
         'summary': summary,
         'genres': genres,
-        # 'teaser': teaser
+        'teaser': teaser
     }
     result.append(movie_tmp)
 

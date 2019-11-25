@@ -1,61 +1,71 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <a href="{% url 'movies:list' %}">[BACK]</a>
-  <hr>
-  <h1>영화 정보</h1>
-  <p>영화 제목 : {{ movie.title }}</p>
-  <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" alt="#" width="300px">
-  <p>관객수 : {{ movie.audience }}</p>
-  <p>개봉일 : {{ movie.start_date }}</p>
-  <p> 감독 : {{ movie.director }}  </p>
-  <p>줄거리 : {{ movie.summary }}</p>
-  <p>장르 :
-    {% for genre in movie.genres.all %}
-      {{ genre }}
-    {% endfor %}
-  </p>
-  <hr>
-  <h1>좋아요</h1>
-    <p class="card-text">
-      <a href="{% url 'movies:like' movie.pk %}">
-        {% if user in movie.like_users.all %}
-          <i class="fas fa-heart like-button" style="color: crimson;" data-id="{{ movie.pk }}"></i>
-        {% else %}
-          <i class="fas fa-heart like-button" style="color: black;" data-id="{{ movie.pk }}"></i>
-        {% endif %}
-      </a>
-    {{ movie.like_users.all|length }}명이 이 글을 좋아합니다.
-    </p>
-  <hr>
-  <h1>리뷰 목록</h1>
-  {% for review in reviews %}
-    <div>
-      평점 : {{ review.score }} / 댓글 : {{ review.comment }} / 작성자 : {{ review.user }}
-      {% if review.user == request.user %}
-        <form action="{% url 'movies:review_delete' movie.pk review.pk %}" method="POST">
-          {% csrf_token %}
-          <input type="submit" value="DELETE">
-        </form>
-      {% endif %}
-  {% empty %}
-    <p><b>댓글이 없습니다.</b></p>
+<a href="{% url 'movies:list' %}">[BACK]</a>
+<hr>
+<h1>영화 정보</h1>
+<p>영화 제목 : {{ movie.title }}</p>
+<p><a href="http://www.youtube.com/embed/{{movie.teaser}}">티져보기</a></p>
+<img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" alt="#" width="300px">
+<p>관객수 : {{ movie.audience }}</p>
+<p>개봉일 : {{ movie.start_date }}</p>
+<p> 감독 : {{ movie.director }} </p>
+<p>줄거리 : {{ movie.summary }}</p>
+<p>장르 :
+  {% for genre in movie.genres.all %}
+  {{ genre }}
   {% endfor %}
-  </div>
-  <hr>
-  <h1>리뷰 작성</h1>
-  {% if user.is_authenticatied %}
-    <form action="{% url 'movies:review_create' movie.pk %}" method="POST">
-      {% csrf_token %}
-      {{ review_form }}
-      <input type="submit" value="submit">
-    </form>
-  {% else %}
-    <a href="#">[댓글을 작성하려면 로그인하세요.]</a>
+</p>
+<hr>
+<h1>좋아요</h1>
+<p class="card-text">
+  <a href="{% url 'movies:like' movie.pk %}">
+    {% if user in movie.like_users.all %}
+    <i class="fas fa-heart like-button" style="color: crimson;" data-id="{{ movie.pk }}"></i>
+    {% else %}
+    <i class="fas fa-heart like-button" style="color: black;" data-id="{{ movie.pk }}"></i>
+    {% endif %}
+  </a>
+  {{ movie.like_users.all|length }}명이 이 글을 좋아합니다.
+</p>
+<hr>
+<h1>리뷰 목록</h1>
+{% for review in reviews %}
+<div>
+  평점 : {{ review.score }} / 댓글 : {{ review.comment }} / 작성자 : {{ review.user }}
+  {% if review.user == request.user %}
+  <form action="{% url 'movies:review_delete' movie.pk review.pk %}" method="POST">
+    {% csrf_token %}
+    <input type="submit" value="DELETE">
+  </form>
   {% endif %}
-  <hr>
-
-
-
+  {% empty %}
+  <p><b>댓글이 없습니다.</b></p>
+  {% endfor %}
+</div>
+<hr>
+<h1>리뷰 작성</h1>
+{% if user.is_authenticated %}
+<form action="{% url 'movies:review_create' movie.pk %}" method="POST">
+  {% csrf_token %}
+  {{ review_form }}
+  <input type="submit" value="submit">
+</form>
+{% else %}
+<a href="{% url 'accounts:login' %}">[댓글을 작성하려면 로그인하세요.]</a>
+{% endif %}
+<hr>
+<h1>주요 출연진</h1>
+<div class="card-deck">
+  {% for cast in casts %}
+  <div class="card">
+    <img src="http://image.tmdb.org/t/p/original/{{ cast.profile_path }}" class="card-img-top" alt="#">
+    <div class="card-body">
+      <h5 class="card-title">{{ cast.name }}</h5>
+      <p class="card-text">{{ cast.character }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 
 {% endblock content %}
