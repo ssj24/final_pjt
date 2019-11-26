@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
@@ -34,7 +35,7 @@ class Cast(models.Model):
 
 class Rating(models.Model):
     comment = models.TextField()
-    score = models.IntegerField()
+    score = models.PositiveIntegerField(default=10, validators=[MaxValueValidator(10), MinValueValidator(0)])
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
