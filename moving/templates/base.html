@@ -22,7 +22,6 @@
 
 	<link href="https://fonts.googleapis.com/css?family=Carrois+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 
-	<lik rel="stylesheet" href="{% static 'accounts/css/first.css' %}">
 	<title>Moving</title>
 
   <style>
@@ -39,33 +38,35 @@
 	a:hover, a:link:, a:active, a:visited {
 		color: #000 !important;
 	}
-	.logo {
+	#logo {
+		background: url('{% static 'accounts/img/film5_03.png' %}');
+		background-size: 100%;
+		background-repeat: no-repeat;
 	}
 	.Nlogo {
 	}
 
-	.navi-bar {
-		background: #fff;
-	}
+
 	.nav-c {
 
 		color: #000;
 	}
 	.nav-c:hover {
-		text-decoration: overline underline solid red !important;
+		text-decoration: underline solid red !important;
 		font-size: 1.3rem;
 		font-weight: bolder;
 		color: #000;
+
 	}
 	
 	.navi {
 		border: 0;
-		background-color: #fff;
-		
+		background: none;
+		color: #000;
 		
 	}
 	.navi:hover {
-		text-decoration: overline underline solid red !important;
+		text-decoration: underline solid red !important;
 		font-size: 1.3rem;
 		font-weight: bolder;
 		color: #000;
@@ -88,9 +89,10 @@
 
 	<div class="container-fluid fixed-top">
 		<div class="navi-bar"></div>
+		<br>
 		<div class="row justify-content-between no-gutters">
 			<br><br><br>
-			<div id="logo" class="d-inline col-1 logo">LOGO</div>
+			<div id="logo" class="d-inline col-1 logo"></div>
 			<div class="col-3"></div>
 			<nav class="d-inline col-8 Nlogo">
 			<br>
@@ -119,7 +121,7 @@
 
   {% block carousel %}
 	{% endblock  %}
-<br><br><br>
+<br><br>
   <div class="container">
     {% block content %}
     {% endblock content %}
