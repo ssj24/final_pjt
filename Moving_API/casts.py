@@ -34,8 +34,12 @@ for i in range(len(movies)):
     response = requests.get(url)
     response_dict = response.json()
     tmps = response_dict["cast"]
+    tmp_cnt = 0
 
     for tmp in tmps:
+        if tmp_cnt == 6:
+            break
+
         cast_tmp = {}
         cast_tmp['model'] = 'movies.cast'
         cast_tmp['pk'] = cnt
@@ -55,8 +59,10 @@ for i in range(len(movies)):
             'name': name,
             'profile_path': profile_path,
         }
+        
         result.append(cast_tmp)
         cnt += 1
+        tmp_cnt += 1
 
 with open('casts.json', 'w', encoding='utf-8') as f:
     json.dump(result, f, ensure_ascii=False, indent=4)

@@ -59,6 +59,10 @@
 
 
 <hr>
+<h4 class="d-inline">관람객 평점</h4>
+<p class="d-inline">  {{ reviews.count }}건</p>
+<input type="submit" value="내 평점 등록" class="btn btn-outline-info p-1">
+<br><br>
 {% for review in reviews %}
 <div>
   <span class="d-inline"> {{ review.user }} | {{ review.score }}점 {{ review.comment }}</span>

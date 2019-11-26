@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block css %}
+
 span {
   vertical-align: middle;
   line-height: 100%;
@@ -43,8 +44,8 @@ span {
 {% endblock css %}
 
 
-
 {% block content %}
+
 <div class="container">
 
     <div class="row">
@@ -57,13 +58,78 @@ span {
           <a href="{% url 'movies:detail' movie.pk %}"><div class="overlay text p-3"><span>{{movie.title}}</span></div></a>
         </div>
       {% endfor %}
-    </div>
-  </div>
 
+<div class="app">
+    <select class="form-control" v-model="selectedGenreId">
+      <option v-for="genre in genres" :key="genre.id" :value="genre.pk">
+      [[ genre.fields.name ]]
+      </option>
+    </select>
+    <div v-if="selectedGenreId === 0">
+      <div v-for="movie in movies" :key="movie.id">
+        <a :href="movie.pk"><p>[[ movie.fields.title ]]</p></a>
+        <img width="300px" :src="'http://image.tmdb.org/t/p/original/'+ movie.fields.poster_url" alt="#">
+      </div>
+
+    </div>
+    <div v-else>
+      <div v-for="movie in filterMovies" :key="movie.id">
+        <p>[[ movie.fields.title ]]</p>
+      </div>
+    </div>
+</div>
 {% endblock content %}
 
 {% block script %}
-<script>
 
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '.app',
+    delimiters: ['[[', ']]'],
+    data() {
+      return {
+        movies: [],
+        genres: [],
+        filterMovies: [],
+        selectedGenreId: 0,
+      }
+    },
+    mounted() {
+      const genreUrl = "https://raw.githubusercontent.com/MAC-FLEX/Moving/master/movies/fixtures/movies/genres.json"
+      axios.get(genreUrl)
+        .then(response => {
+          this.genres = response.data
+          this.genres.unshift({
+            "pk": 0,
+            "fields": {
+              "name": "전체보기"
+            },
+          })
+        })
+      const movieUrl = 'https://raw.githubusercontent.com/MAC-FLEX/Moving/master/movies/fixtures/movies/movies.json'
+      axios.get(movieUrl)
+        .then(response => {
+          this.movies = response.data
+        })
+    },
+    watch: {
+      selectedGenreId: {
+        handler() {
+          this.filterMovies = this.movies.filter(movie => {
+            var tmp = movie.fields.genres
+            var check = false
+            for (var i = 0 in tmp) {
+              if (tmp[i] === this.selectedGenreId) {
+                check = true
+              }
+            }
+            return check
+          })
+        }
+      }
+    }
+  })
 </script>
 {% endblock script %}
+
