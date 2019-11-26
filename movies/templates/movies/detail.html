@@ -8,7 +8,8 @@
 <div class="card mb-3">
   <div class="row no-gutters">
     <div class="col-md-4">
-      <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" class="card-img align-center" alt="{{ movie.title }}image">
+      <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" class="card-img align-center" alt="{{ movie.title }}image" data-toggle="modal" data-target="#exampleModal">
+      
     </div>
     <div class="col-md-8">
       <div class="card-body">
@@ -38,16 +39,16 @@
   </div>
 </div>
 {% if movie.teaser != '' %}
-<iframe width="560" height="315" src="http://www.youtube.com/embed/{{movie.teaser}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="100%" height="615" src="http://www.youtube.com/embed/{{movie.teaser}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 {% else %}
 
 {% endif %}
 <hr>
 <h1>주요 출연진</h1>
-<div class="card-deck">
+<div class="card-deck" style="width: 1000px;">
   {% for cast in casts %}
   <div class="card">
-    <img src="http://image.tmdb.org/t/p/original/{{ cast.profile_path }}" class="card-img-top" alt="#">
+    <img src="http://image.tmdb.org/t/p/original/{{ cast.profile_path }}" class="card-img-top" alt="#" width="200px">
     <div class="card-body">
       <h5 class="card-title">{{ cast.name }}</h5>
       <p class="card-text">{{ cast.character }}</p>
@@ -79,13 +80,14 @@
 <div class="container">
 <hr>
 {% if user.is_authenticated %}
-<form action="{% url 'movies:review_create' movie.pk %}" method="POST">
-  {% csrf_token %}
-  {% bootstrap_form review_form %}
-  <input type="submit" value="submit" class="btn btn-outline-info">
-</form>
+  <form action="{% url 'movies:review_create' movie.pk %}" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form review_form %}
+    <input type="submit" value="submit" class="btn btn-outline-info">
+  
+  </form>
 {% else %}
-<a href="#">[댓글을 작성하려면 로그인하세요.]</a>
+  [댓글을 작성하려면 로그인하세요.]\
 {% endif %}
 </div>
 <br>
@@ -100,14 +102,14 @@
     button.addEventListener('click', function (event) {
 
       const movieId = event.target.dataset.id
-      console.log(typeof (movieId))
+      // console.log(typeof (movieId))
       // 해상 상세 게시글의 좋아요 요청을 보낸다.
       axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
       axios.defaults.xsrfCookieName = 'csrftoken'
       axios.defaults.xsrfHeaderName = 'X-CSRFToken'
       axios.post(`/movies/${movieId}/like/`)
         .then(response => {
-          console.log(response)
+          // console.log(response)
           document.querySelector(`#like-count-${movieId}`).innerText = response.data.count
           if (response.data.liked) {
             event.target.style.color = 'crimson'
@@ -117,5 +119,9 @@
         })
     })
   })
+  
+  
+  
+  
 </script>
 {% endblock script %}

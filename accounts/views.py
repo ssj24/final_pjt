@@ -6,6 +6,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm, PasswordChangeForm 
 from django.views.decorators.http import require_POST
+from django.http import JsonResponse, HttpResponseBadRequest
 
 # Create your views here.
 def index(request):
@@ -90,9 +91,15 @@ def user_detail(request, user_pk):
 def follow(request, user_pk):
     person = get_object_or_404(get_user_model(), pk = user_pk)
     user = request.user
-    if person != user:
-        if person.follow_user.filter(pk=user.pk).exists():
-            person.follow_user.remove(user)
-        else:
-            person.follow_user.add(user)
-    return redirect('accounts:user_detail', person.pk)
+    if request.is_ajax():
+        if person != user:
+            if person.follow_user.filter(pk=user.pk).exists():
+                person.follow_user.remove(user)
+                followed = False
+            else:
+                person.follow_user.add(user)
+                followed = True
+        context = {'followed': followed, 'count': person.follow_user.count(),}
+        return JsonResponse(context)
+    else:
+        return HttpResponseBadRequest

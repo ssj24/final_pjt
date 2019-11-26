@@ -2,35 +2,63 @@
 {% load static %}
 
 {% block css %}
-.after_modal_appended
-{
-position:relative;
+
+span {
+  vertical-align: middle;
+  line-height: 100%;
+}
+.overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #000;
+  text-decoration: underline solid red;
 }
 
-.red
-{
-background-color:red;
-border: solid 10px;
+.imgdiv:hover .overlay {
+  opacity: 0.7;
 }
 
-.blue
-{
-background-color:blue;
+.text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  
 }
 
-.block
-{
-width:100%;
-height:200px;
-}
-
-.modal, .modal-backdrop {
-position: absolute !important;
-}
 {% endblock css %}
 
 
 {% block content %}
+
+<div class="container">
+
+    <div class="row">
+      {% for movie in movies %}
+
+        
+        <div class="card col-3 p-0 imgdiv" id="imgdiv" >
+
+          <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" id="imgs" class="card-img-top" alt="{{ movie.title }}포스터" height="100%">
+          <a href="{% url 'movies:detail' movie.pk %}"><div class="overlay text p-3"><span>{{movie.title}}</span></div></a>
+        </div>
+      {% endfor %}
+
 <div class="app">
     <select class="form-control" v-model="selectedGenreId">
       <option v-for="genre in genres" :key="genre.id" :value="genre.pk">
@@ -42,6 +70,7 @@ position: absolute !important;
         <a :href="movie.pk"><p>[[ movie.fields.title ]]</p></a>
         <img width="300px" :src="'http://image.tmdb.org/t/p/original/'+ movie.fields.poster_url" alt="#">
       </div>
+
     </div>
     <div v-else>
       <div v-for="movie in filterMovies" :key="movie.id">
@@ -52,6 +81,7 @@ position: absolute !important;
 {% endblock content %}
 
 {% block script %}
+
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
   const app = new Vue({
@@ -102,3 +132,4 @@ position: absolute !important;
   })
 </script>
 {% endblock script %}
+
