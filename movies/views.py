@@ -47,6 +47,20 @@ def review_delete(request, movie_pk, review_pk):
         return redirect('movies:detail', movie_pk)
     return HttpResponse('You ar Unauthorized', status=401)
 
+@login_required
+def review_update(request, movie_pk, review_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    review = get_object_or_404(Rating, pk=review_pk)
+    if request.user == review.user:
+        if request.method == 'POST':
+            review_form = RatingForm(request.POST, instance=review)
+            if review_form.is_valid():
+                review = review_form.save()
+                return redirect('movies:detail', movie_pk)
+    
+    context = {'review_update_form': review_form, 'movie': movie,}
+    return render(request, 'movies/detail.html', context)
+
 
 def like(request, movie_pk):
     if request.is_ajax():

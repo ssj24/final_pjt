@@ -1,15 +1,35 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
-
+{% load static %}
+{% block css %}
+body {
+  background: url('{% static 'accounts/img/theater.jpg' %}');
+  background-size: 100% 100%;
+  background-attachment: fixed;
+}
+.backg {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border-radius: 20px;
+}
+.login {
+  font-family: 'Carrois Gothic', sans-serif;
+  font-weight: bold;
+}
+{% endblock css %}
 {% block content %}
-  <h3>회원가입</h3>
-  <br>
-  <form action="" method="POST">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    <input type="submit" class="btn btn-outline-info formbtn" value="회원가입">
-    
-    <a href="{% url 'accounts:index' %}" class="btn btn-outline-info formbtn">BACK</a>
-  </form>
+  <div class="row justify-content-center">
+    <div class="col-8 p-3 backg text-center">
+      <h3 class="login">SIGNUP</h3>
+      <br>
+      <form action="" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit" class="btn btn-outline-info formbtn" value="회원가입">
+        
+        <a href="{% url 'accounts:index' %}" class="btn btn-outline-info formbtn">BACK</a>
+      </form>
+    </div>
+  </div>
   
 {% endblock %}

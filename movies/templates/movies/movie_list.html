@@ -22,12 +22,22 @@ span {
   width: 100%;
   opacity: 0;
   transition: .5s ease;
-  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.7);
   text-decoration: underline solid red;
 }
 
+.imgdiv {
+  transition: box-shadow .3s;
+}
+
+.imgdiv:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+  z-index: 300;
+}
+
 .imgdiv:hover .overlay {
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .text {
@@ -45,10 +55,11 @@ span {
 
 
 {% block content %}
-
+<br><br><br><br>
 <div class="container">
 
     <div class="row">
+    <br><br><br><br>
       {% for movie in movies %}
 
         
