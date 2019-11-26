@@ -125,29 +125,6 @@
 	{% block script %}
 	{% endblock script %}
 
-	<script>
-		const likebuttons = document.querySelectorALl('.like-button')
-		likebuttons.forEach(button => {
-			button.addEventListener('click', function (event) {
-				const movieId = event.target.dataset.id
-				axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-				axios.defaults.xsrfCookieName = 'csrftoken'
-				axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-				axios.post(`/movies/${movieId}/like/`)
-					.then(response => {
-						document.querySelector(`#like-count-${movieId}`).innerText = response.data.count
-						if (response.data.liked) {
-							event.target.style.color = 'crimson'
-						} else {
-							event.target.style.color = 'black'
-						}
-					})
-					.catch(error => console.log(error))
-			})
-		})
-	</script>
-
-
 </body>
 
 </html>
