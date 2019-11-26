@@ -32,7 +32,13 @@
 		
 	}
 
-
+	a {
+		text-decoration: none !important;
+		color: #000;
+	}
+	a:hover, a:link:, a:active, a:visited {
+		color: #000 !important;
+	}
 	.logo {
 	}
 	.Nlogo {
@@ -80,7 +86,8 @@
 
 <body>
 
-	<div class="container-fluid fixed-top navi-bar">
+	<div class="container-fluid fixed-top">
+		<div class="navi-bar"></div>
 		<div class="row justify-content-between no-gutters">
 			<br><br><br>
 			<div id="logo" class="d-inline col-1 logo">LOGO</div>
@@ -121,32 +128,10 @@
   <!-- bootstrap -->
   {% bootstrap_javascript jquery='full' %}
 	
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	
 	{% block script %}
 	{% endblock script %}
-
-	<script>
-		const likebuttons = document.querySelectorALl('.like-button')
-		likebuttons.forEach(button => {
-			button.addEventListener('click', function (event) {
-				const movieId = event.target.dataset.id
-				axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-				axios.defaults.xsrfCookieName = 'csrftoken'
-				axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-				axios.post(`/movies/${movieId}/like/`)
-					.then(response => {
-						document.querySelector(`#like-count-${movieId}`).innerText = response.data.count
-						if (response.data.liked) {
-							event.target.style.color = 'crimson'
-						} else {
-							event.target.style.color = 'black'
-						}
-					})
-					.catch(error => console.log(error))
-			})
-		})
-	</script>
-
 
 </body>
 

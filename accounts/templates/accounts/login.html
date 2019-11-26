@@ -4,17 +4,17 @@
 {% load socialaccount %}
 {% block css %}
 body {
-  background: url('{% static 'movies/img/라이온킹.jpg' %}');
-  background-size: 100%;
+  background: url('{% static 'accounts/img/theater.jpg' %}');
+  background-size: 100% 100%;
+  background-attachment: fixed;
 }
 .backg {
-  background-color: #fff;
-  opacity: 0.85;
+  background-color: rgba(255, 255, 255, 0.3);
   border-radius: 20px;
 }
 {% endblock css %}
 {% block content %}
-<br><br><br><br><br>
+
   <div class="row justify-content-center">
     <div class="col-5 p-3 backg">
       <h3>로그인</h3>
@@ -32,4 +32,5 @@ body {
       </form>
     </div>
   </div>
+
 {% endblock content %}

@@ -2,32 +2,43 @@
 {% load static %}
 
 {% block css %}
-.after_modal_appended
-{  
-  position:relative;
+span {
+  vertical-align: middle;
+  line-height: 100%;
+}
+.overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #000;
+  text-decoration: underline solid red;
 }
 
-.red
-{
-  background-color:red;
-  border: solid 10px;
+.imgdiv:hover .overlay {
+  opacity: 0.7;
 }
 
-.blue
-{
-  background-color:blue;
+.text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  
 }
-
-.block 
-{
-  width:100%;
-  height:200px;
-}
-
-.modal, .modal-backdrop {
-    position: absolute !important;
-}
-
 
 {% endblock css %}
 
@@ -39,33 +50,11 @@
     <div class="row">
       {% for movie in movies %}
 
-        <a href="{% url 'movies:detail' movie.pk %}">
-        <div class="card col-3 p-0" id="b">
-          
-          <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" id="a" class="card-img-top" alt="{{ movie.title }}포스터" height="100%"></a>
-          
-                 <!-- Modal -->
-          <div id="myModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
+        
+        <div class="card col-3 p-0 imgdiv" id="imgdiv" >
 
-              <!-- Modal content-->
-              <div class="modal-content">
-                <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Modal Header</h4>
-                </div>
-                <div class="modal-body">
-                  <p>Some text in the modal.</p>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-          
+          <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" id="imgs" class="card-img-top" alt="{{ movie.title }}포스터" height="100%">
+          <a href="{% url 'movies:detail' movie.pk %}"><div class="overlay text p-3"><span>{{movie.title}}</span></div></a>
         </div>
       {% endfor %}
     </div>
@@ -73,4 +62,8 @@
 
 {% endblock content %}
 
+{% block script %}
+<script>
 
+</script>
+{% endblock script %}
