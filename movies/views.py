@@ -58,8 +58,7 @@ def review_update(request, movie_pk, review_pk):
                 review = review_form.save()
                 return redirect('movies:detail', movie_pk)
     
-    context = {'review_update_form': review_form, 'movie': movie,}
-    return render(request, 'movies/detail.html', context)
+    return redirect('movies:detail', movie_pk)
 
 
 def like(request, movie_pk):
