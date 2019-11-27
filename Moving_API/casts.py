@@ -4,25 +4,23 @@ import json
 from pprint import pprint
 from decouple import config
 
+
 movies = []
+
+with open('movies.json', encoding='utf-8') as f:
+    json_data = json.load(f)
+    # pprint(json_data)
+    
+    for row in json_data:
+        # print(row["pk"])
+        # print(type(row["pk"]))
+        movies.append(row["pk"])
+
+# print(len(movies))
+# print(movies)
+
 result = []
 key = config('KEY')
-
-# Discover
-
-for i in range(3):
-# for i in range(1):
-
-    page = i+1
-    base_url = 'https://api.themoviedb.org/3/discover/movie?'
-    url = base_url + f'api_key={key}&language=ko-KR&sort_by=popularity.desc&include_adult=false&include_video=false&page={page}'
-    
-    response = requests.get(url)
-    response_dict = response.json()
-
-    for i in range(len(response_dict['results'])):
-        movieId = response_dict['results'][i]['id']
-        movies.append(movieId)
 
 cnt = 0
 for i in range(len(movies)):
@@ -51,7 +49,7 @@ for i in range(len(movies)):
         if tmp["profile_path"]:
             profile_path = tmp["profile_path"]
         else:
-            profile_path = ""
+            continue
 
         cast_tmp['fields'] = {
             'movie': movie,
