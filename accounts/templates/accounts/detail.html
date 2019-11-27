@@ -1,26 +1,79 @@
 {% extends 'base.html' %}
-
+{% block css %}
+.nav-c:hover {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #000;
+}
+.navi:hover {
+  font-size: 1rem;
+  font-weight: bold;
+}
+{% endblock css %}
 {% block content %}
+<div class=" text-center">
   <br>
-  <h2>{{ auth_user.username }}</h2>
-  <hr>
-  {% for review in ratings %}
-    <a href="{% url 'movies:detail' review.movie.pk %}"><h4>{{ review.movie.title }}</h4></a>
-    
-    {{ review.score }} | {{ review.comment }}
-    <hr>
-  {% endfor %}
-
   {% with followers=auth_user.follow_user.all followings=auth_user.following_user.all %}
-    <h5>
-    팔로워: <span id="follow-count-{{auth_user.pk}}">{{ auth_user.follow_user.count }}</span>
-    팔로잉: {{ followings|length }}
-    </h5>
-    <select name="" id="">
-      {% for following in followers %}
-        <a href="{% url 'accounts:user_detail' following.pk %}"><option value="following.username">{{following.username}}</option></a>
-      {% endfor %}
-    </select>
+  <div class="d-flex justify-content-center align-items-center">
+    <h2 class="d-inline">{{ auth_user.username }}</h2>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="d-inline">
+      <h5 class="mb-0" style="font-size: 1.4rem; font-weight: bold;"><span id="follow-count-{{auth_user.pk}}">{{ auth_user.follow_user.count }}</span></h5> 
+      <br>
+      <h6 class="mt-0">
+        <select name="" id="">
+          <option value="followers" selected>followers</option>
+          {% for following in followers %}
+            <a href="{% url 'accounts:user_detail' following.pk %}"><option value="following.username">{{following.username}}</option></a>
+          {% endfor %}
+        </select>
+      </h6> 
+    </div>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="d-inline">
+      <h5 class="mb-0" style="font-size: 1.4rem; font-weight: bold;">{{ followings|length }}</h5> 
+      <br>
+      <h6>
+        <select name="" id="">
+          <option value="followings" selected>followeings</option>
+          {% for following in followings %}
+            <a href="{% url 'accounts:user_detail' following.pk %}"><option value="following.username">{{following.username}}</option></a>
+          {% endfor %}
+        </select>
+      </h6>
+    </div>
+  </div>
+  {% if user == auth_user %}
+  <a class="nav-item nav-link nav-c d-inline" href="{% url 'accounts:update' %}" role="tab">정보수정</a>
+  <a class="nav-item nav-link nav-c d-inline" href="{% url 'accounts:change_password' %}" role="tab">비밀번호 변경</a>
+  <a class="nav-item nav-link nav-c d-inline" role="tab">
+    <form action="{% url 'accounts:delete' %}" method='POST' style="display: inline;">
+      {% csrf_token %}
+      <input type="submit" value="회원탈퇴" class="navi">
+    </form>
+  </a>
+  
+  <hr>
+  <div class="row">
+    {% for review in ratings %}
+
+      <div class="card col-4 p-0" style="width: 18rem;">
+        <img src="http://image.tmdb.org/t/p/original/{{review.movie.poster_url}}" class="card-img-top" alt="평점을 남긴 영화 이미지" width="100%" height="80%">
+        <div class="card-body">
+          <p class="card-text">
+      <a href="{% url 'movies:detail' review.movie.pk %}"><h4>{{ review.movie.title }}</h4></a></p>
+          <p class="card-text">{{ review.score }} | {{ review.comment }}</p>
+        </div>
+      </div>
+
+      
+      
+      <hr>
+    {% endfor %}
+  </div>
+  {% endif %}
+    
+
     
     <hr>
     {% if user.is_authenticated %}
@@ -34,7 +87,8 @@
       {% endif %}
     {% endif %}
   {% endwith %}
-  <a href="{% url 'accounts:index' %}" class="btn btn-info">BACK</a>
+  </div>
+  <a href="{% url 'accounts:index' %}" class="a-c">BACK</a>
 {% endblock content %}
 {% block script %}
 <script>
