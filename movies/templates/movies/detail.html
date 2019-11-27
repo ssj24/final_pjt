@@ -2,8 +2,8 @@
 {% load bootstrap4 %}
 {% block content %}
 <br><br><br><br>
-<a href="{% url 'movies:list' %}" class="btn btn-outline-info">BACK</a>
-
+<a href="{% url 'movies:list' %}" class="a-c">BACK</a>
+<br><br><br>
 
 <div class="card mb-3">
   <div class="row no-gutters">
@@ -16,22 +16,22 @@
         <h4 class="card-title">{{ movie.title }}</h4>
         
         <p class="card-text">{{ movie.summary }}</p>
-        <div class="align-bottom">
-        <p class="card-text text-right"><small class="text-muted">개봉일: {{ movie.start_date }}</small></p>
-        <p class="card-text text-right"><small class="text-muted">감독: {{ movie.director }}  </small></p>
-        <p class="card-text text-right"><small class="text-muted">장르: 
-          {% for genre in movie.genres.all %}
-            {{ genre }}
-          {% endfor %}</small></p>
-        <p class="card-text text-right align-bottom">
-          {% if user.is_authenticated %}
-            {% if user in movie.like_users.all %}
-            <i class="fas fa-heart like-button" style="color: crimson;" data-id="{{ movie.pk }}"></i>
-            {% else %}
-            <i class="fas fa-heart like-button" style="color: black;" data-id="{{ movie.pk }}"></i>
+        <div class="d-flex align-items-bottom">
+          <p class="card-text text-right"><small class="text-muted">개봉일: {{ movie.start_date }}</small></p>
+          <p class="card-text text-right"><small class="text-muted">감독: {{ movie.director }}  </small></p>
+          <p class="card-text text-right"><small class="text-muted">장르: 
+            {% for genre in movie.genres.all %}
+              {{ genre }}
+            {% endfor %}</small></p>
+          <p class="card-text text-right align-bottom">
+            {% if user.is_authenticated %}
+              {% if user in movie.like_users.all %}
+              <i class="fas fa-heart like-button" style="color: crimson;" data-id="{{ movie.pk }}"></i>
+              {% else %}
+              <i class="fas fa-heart like-button" style="color: black;" data-id="{{ movie.pk }}"></i>
+              {% endif %}
             {% endif %}
-          {% endif %}
-          <span id="like-count-{{ movie.pk }}">{{ movie.like_users.count }}</span>명이 이 영화를 좋아합니다.
+            <span id="like-count-{{ movie.pk }}">{{ movie.like_users.count }}</span>명이 이 영화를 좋아합니다.
         </p>
         </div>
       </div>
