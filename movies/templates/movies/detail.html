@@ -39,7 +39,7 @@
   </div>
 </div>
 {% if movie.teaser != '' %}
-<iframe width="100%" height="615" src="http://www.youtube.com/embed/{{movie.teaser}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="100%" height="615" src="http://www.youtube.com/embed/{{movie.teaser}}?&autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 {% else %}
 
 {% endif %}
@@ -65,7 +65,7 @@
 <br><br>
 {% for review in reviews %}
 <div>
-  <span class="d-inline"> {{ review.user }} | {{ review.score }}점 {{ review.comment }}</span>
+  <span class="d-inline"> <a href="{% url 'accounts:user_detail' review.user.pk %}">{{ review.user }}</a> | {{ review.score }}점 {{ review.comment }}</span>
   {% if review.user == request.user %}
   <form action="{% url 'movies:review_update' movie.pk review.pk %}" method="POST" class="d-inline">
     {% csrf_token %}
