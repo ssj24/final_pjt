@@ -7,7 +7,8 @@
 {% endblock css %}
 {% block content %}
   <br><br>
-  <p style="text-align: right;"><span style="font-weight: bold; font-color: #ff000;">{{users|length}}</span>명</p>
+  
+  <p style="text-align: right;">총 회원 수는<span style="font-size: 1.2rem; color: #ff0000;"> {{users|length}}</span>명입니다.</p>
   
   {% for user in users %}
     

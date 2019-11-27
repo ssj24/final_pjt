@@ -23,6 +23,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Carrois+Gothic|Nanum+Gothic+Coding&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">	<title>Moving</title>
 	<link href="https://fonts.googleapis.com/css?family=Nanum+Myeongjo|Sunflower:300&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=East+Sea+Dokdo&display=swap" rel="stylesheet">
 	<style>
 
 	* {
@@ -61,6 +62,7 @@
 		text-decoration: underline solid red !important;
 		font-size: 1.3rem;
 		font-weight: bolder;
+		cursor: pointer;
 
 	}
 	.a-c {
@@ -72,6 +74,7 @@
 		font-size: 1.3rem;
 		font-weight: bolder;
 		color: #000;
+		cursor: pointer;
 	}
 	
 	.navi {
@@ -84,13 +87,15 @@
 		text-decoration: underline solid red !important;
 		font-size: 1.3rem;
 		font-weight: bolder;
+		cursor: pointer;
+
 	}
 
 	.hr1 {
 		display: block;
 		margin : 1em 0;
 		border-style: inset;
-		
+		color: #fff;
 	}
 	{% block css %}
 	{% endblock css %}
@@ -105,8 +110,11 @@
 		<div class="navi-bar"></div>
 		<div class="row justify-content-between p-3 navi-border" style="border-bottom: solid 1px #fff;">
 			
-			<div id="logo" class="d-inline col-1 logo"><a href="{% url 'movies:index' %}"><img src="{% static 'accounts/img/film5_03.png' %}" alt="로고 이미지" width="100%"></a></div>
-			<div class="col-3"></div>
+			<div id="logo" class="d-inline col-1 logo"><a href="{% url 'movies:index' %}"><img src="{% static 'accounts/img/letter.png' %}" alt="로고 이미지" width="100%"></a></div>
+			<div class="col-3 text-center" style="color: #000;">
+			
+			
+			</div>
 			<nav class="d-inline col-8 Nlogo">
 				<div class="nav simple-tab-nav row justify-content-end" id="nav-tab" role="tablist">
 					<a class="nav-item nav-link active nav-c" id="nav-movie-tab" href="{% url 'movies:list' %}" role="tab" aria-controls="nav-home" aria-selected="true">MOVIES</a>
@@ -136,7 +144,7 @@
   {% bootstrap_javascript jquery='full' %}
 	
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	
+
 	{% block script %}
 	{% endblock script %}
 

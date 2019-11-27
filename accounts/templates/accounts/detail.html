@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block css %}
-.nav-c:hover {
+.nav-cc {
+  border: solid 1px #000;
+  padding: 5px;
+  font-size: 0.9rem;
+}
+.nav-cc:hover {
   font-size: 1rem;
   font-weight: bold;
   color: #000;
@@ -9,44 +15,157 @@
   font-size: 1rem;
   font-weight: bold;
 }
+.a-c {
+  border: 0;
+  padding: 5px;
+  background: transparent;
+}
+
+.speech-bubble {
+	position: relative;
+  top:-50%;
+
+	border-radius: .4em;
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #fff;
+}
+
+.speech-bubble a {
+  color: #fff;
+}
+
+.example-open .modal-backdrop {background-color: #fff;}
+
+.modal-header {
+    
+}
+
+.modal-body a:hover {
+  text-decoration: underline solid red !important;
+}
+
+.modal-footer {
+    border-top: 0 none;
+}
+
+.modal-content {
+  padding: 5px 30px;
+}
+
+.close {
+    color: #fff; 
+    opacity: 1;
+}
+
+.close:hover {
+  color: #ff0000;
+}
+
+.a-cf {
+  font-weight: bold;
+  border: solid 1px black;
+  padding: 5px 10px;
+}
+.a-cf:hover {
+  font-size: 1.2rem;
+  color: #ff0000;
+  padding: 2px 8px;
+}
+
+.follow-c:hover {
+  cursor: pointer;
+}
+
+
 {% endblock css %}
 {% block content %}
 <div class=" text-center">
   <br>
   {% with followers=auth_user.follow_user.all followings=auth_user.following_user.all %}
   <div class="d-flex justify-content-center align-items-center">
-    <h2 class="d-inline">{{ auth_user.username }}</h2>
+    <h2 class="d-inline" style="font-family: 'East Sea Dokdo'; font-size: 4rem;">{{ auth_user.username }}</h2> &nbsp;&nbsp;&nbsp;
+    {% if user.is_authenticated %}
+      {% if user != auth_user %}
+        {% if user in follwers %}
+          
+          <span class="a-cf follow" data-id="{{ auth_user.pk }}">-</span>
+        {% else %}
+          <span class="a-cf follow" data-id="{{ auth_user.pk }}">+</span>
+
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <div class="d-inline">
-      <h5 class="mb-0" style="font-size: 1.4rem; font-weight: bold;"><span id="follow-count-{{auth_user.pk}}">{{ auth_user.follow_user.count }}</span></h5> 
+      <h5 class="mb-0 follow-c" style="font-size: 1.4rem; font-weight: bold; line-height: 0;" data-toggle="modal" data-target="#followers"><span id="follow-count-{{auth_user.pk}}">{{ auth_user.follow_user.count }}</span></h5> 
       <br>
-      <h6 class="mt-0">
-        <select name="" id="">
-          <option value="followers" selected>followers</option>
-          {% for following in followers %}
-            <a href="{% url 'accounts:user_detail' following.pk %}"><option value="following.username">{{following.username}}</option></a>
-          {% endfor %}
-        </select>
-      </h6> 
+      
+      <button type="button" class="a-c" data-toggle="modal" data-target="#followers">
+        followers
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="followers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content speech-bubble">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle">FOLLOWERS</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              {% for following in followers %}
+                <a href="{% url 'accounts:user_detail' following.pk %}" class="nav-c" style="color:#fff;"><h2 style="font-family: 'East Sea Dokdo'; font-size: 4rem;">{{following.username}}</h2></a>
+              {% endfor %}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="a-c" style="color:#fff;" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      
     </div>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <div class="d-inline">
-      <h5 class="mb-0" style="font-size: 1.4rem; font-weight: bold;">{{ followings|length }}</h5> 
+      <h5 class="mb-0 follow-c" style="font-size: 1.4rem; font-weight: bold; line-height: 0;" data-toggle="modal" data-target="#exampleModalCenter">{{ followings|length }}</h5> 
       <br>
-      <h6>
-        <select name="" id="">
-          <option value="followings" selected>followeings</option>
-          {% for following in followings %}
-            <a href="{% url 'accounts:user_detail' following.pk %}"><option value="following.username">{{following.username}}</option></a>
-          {% endfor %}
-        </select>
-      </h6>
+      <button type="button" class="a-c" data-toggle="modal" data-target="#exampleModalCenter">
+        follow
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content speech-bubble">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle">FOLLOW</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              {% for following in followings %}
+                <a href="{% url 'accounts:user_detail' following.pk %}"><h2 style="font-family: 'East Sea Dokdo'; font-size: 4rem;">{{following.username}}</h2></a>
+              {% endfor %}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="a-c" style="color:#fff;" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
   {% if user == auth_user %}
-  <a class="nav-item nav-link nav-c d-inline" href="{% url 'accounts:update' %}" role="tab">정보수정</a>
-  <a class="nav-item nav-link nav-c d-inline" href="{% url 'accounts:change_password' %}" role="tab">비밀번호 변경</a>
-  <a class="nav-item nav-link nav-c d-inline" role="tab">
+  <a class="nav-item nav-link nav-c nav-cc d-inline" href="{% url 'accounts:update' %}" role="tab">정보수정</a>
+  <a class="nav-item nav-link nav-c nav-cc d-inline" href="{% url 'accounts:change_password' %}" role="tab">비밀번호 변경</a>
+  <a class="nav-item nav-link nav-c nav-cc d-inline" role="tab">
     <form action="{% url 'accounts:delete' %}" method='POST' style="display: inline;">
       {% csrf_token %}
       <input type="submit" value="회원탈퇴" class="navi">
@@ -54,41 +173,46 @@
   </a>
   
   <hr>
-  <div class="row">
-    {% for review in ratings %}
-
-      <div class="card col-4 p-0" style="width: 18rem;">
-        <img src="http://image.tmdb.org/t/p/original/{{review.movie.poster_url}}" class="card-img-top" alt="평점을 남긴 영화 이미지" width="100%" height="80%">
+  {% if ratings|length %}
+    <ul>
+      {% for review in ratings %}
+        <li><h5 class="d-inline"><a href="{% url 'movies:detail' review.movie.pk %}">{{ review.movie.title }}</a></h5>에 남기신 리뷰입니다.</li>
+        <li>{{ review.score }} | {{ review.comment }}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    아직 {{auth_user.username}}님이 남기신 리뷰가 없습니다ㅠㅠ
+    <hr>
+  {% endif %}
+  {% endif %}
+  {% if movies %}
+  <div class="d-flex">
+    {% for movie in movies %}
+      <div class="card p-0 d-inline" style="width: 18rem; height: 30rem;">
+        <img src="http://image.tmdb.org/t/p/original/{{movie.poster_url}}" class="card-img-top" alt="좋아하는 영화 이미지" width="100%" height="80%">
         <div class="card-body">
           <p class="card-text">
-      <a href="{% url 'movies:detail' review.movie.pk %}"><h4>{{ review.movie.title }}</h4></a></p>
-          <p class="card-text">{{ review.score }} | {{ review.comment }}</p>
+            <a href="{% url 'movies:detail' movie.pk %}">
+              <h4>{{ movie.title }}</h4>
+            </a>
+          </p>
         </div>
       </div>
-
       
-      
-      <hr>
     {% endfor %}
   </div>
-  {% endif %}
-    
-
-    
+  {% else %}
+    아직 {{auth_user.username}}님은 마음에 드는 영화를 찾지 못 했습니다
     <hr>
-    {% if user.is_authenticated %}
-      {% if user != auth_user %}
-        {% if user in follwers %}
-          <span class="btn btn-danger follow" data-id="{{ auth_user.pk }}">UnFollow</span>
-        {% else %}
-          <span class="btn btn-danger follow" data-id="{{ auth_user.pk }}">Follow</span>
-
-        {% endif %}
-      {% endif %}
-    {% endif %}
+  {% endif %}
+  {% if randomf and randomm %}
+      오늘은 <span style="text-decoration: underline solid #ff0000;">{{ randomf.username }}님</span>이 추천하는 영화를 보는 건 어떨까요?
+      <a href="{% url 'movies:detail' randomm.pk %}"><h2>{{ randomm.title }}</h2></a>
+  {% endif %}
   {% endwith %}
   </div>
-  <a href="{% url 'accounts:index' %}" class="a-c">BACK</a>
+  <a href="{% url 'accounts:index' %}" class="a-c float-right">BACK</a>
+  <br><br>
 {% endblock content %}
 {% block script %}
 <script>
@@ -101,18 +225,27 @@ follows.forEach(button => {
     axios.defaults.xsrfHeaderName = 'X-CSRFToken'
     axios.get(`/accounts/follow/${followId}/`)
       .then(response => {
-        document.querySelector(`#follow-count-${followId}`).innerText = response.data.count
         if (response.data.followed) {
           
-          event.target.innerText = "Follow"
+          event.target.innerText = "-"
         } else {
           
-          event.target.innerText = "Unfollow"
+          event.target.innerText = "+"
         }
+        document.querySelector(`#follow-count-${followId}`).innerText = response.data.count
       })
       .catch(error => console.log(error))
   })
 })
-
+$('#exampleModalCenter').on('show.bs.modal', function (e) {
+  $('body').addClass("example-open");
+}).on('hide.bs.modal', function (e) {
+    $('body').removeClass("example-open");
+})
+$('#followers').on('show.bs.modal', function (e) {
+  $('body').addClass("example-open");
+}).on('hide.bs.modal', function (e) {
+    $('body').removeClass("example-open");
+})
 </script>
 {% endblock script %}
