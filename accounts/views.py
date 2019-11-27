@@ -10,9 +10,12 @@ from django.http import JsonResponse, HttpResponseBadRequest
 
 # Create your views here.
 def index(request):
-    users = get_user_model().objects.all()
-    context = {'users': users,}
-    return render(request, 'accounts/index.html', context)
+    if request.user.is_staff:
+        users = get_user_model().objects.all()
+        context = {'users': users,}
+        return render(request, 'accounts/index.html', context)
+    else:
+        return redirect('movies:index')
 
 def signup(request):
     if request.user.is_authenticated:

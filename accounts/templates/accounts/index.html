@@ -20,7 +20,7 @@
         <p class="card-text">{{user.email}}</p>
         <a href="{% url 'accounts:user_detail' user.pk %}" class="btn btn-outline-primary button p-1">Detail</a>
       </div>
-      {% if users.is_authenticated %}
+      
         <div class="card-footer text-muted">
           {% if user.is_staff %}
           관리자
@@ -30,7 +30,7 @@
           
           {% endif %}
         </div>
-      {% endif %}
+      
     </div>
     <br>
   {% endfor %}

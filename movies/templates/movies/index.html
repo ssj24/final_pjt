@@ -2,17 +2,33 @@
 {% load static %}
 
 {% block css %}
-.navi-bar {
-  filter: alpha(opacity=70%);
+.navi-border {
+  background-color: transparent;
+}
+.navi-border:hover {
+	background-color: #fff;
+	}
+
+.nav-c {
+  color: #fff;
 }
 
+.navi {
+  color: #fff;
+}
+.navi-border:hover .nav-c {
+  color: #000;
+}
+.navi-border:hover .navi {
+  color: #000;
+}
 html {
   overflow-y: hidden;
 }
 {% endblock css %}
 {% block carousel %}
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
+  <div class="carousel-inner" style="opacity: 0.6;">
     <div class="carousel-item active">
       <img src="{% static 'movies/img/겨울왕국2.jpg' %}" class="d-block w-100" alt="#">
     </div>
