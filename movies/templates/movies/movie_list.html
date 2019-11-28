@@ -64,8 +64,8 @@ span {
 
 <br><br><br><br>
 <div class="app">
-  <select class="form-control" style="width:200px;" v-model="selectedGenreId">
-    <option v-for="genre in genres" :key="genre.id" :value="genre.pk">
+  <select class="form-control" style="width:200px; height: 30px; font-family: 'Nanum Gothic Coding';" v-model="selectedGenreId">
+    <option v-for="genre in genres" :key="genre.id" :value="genre.pk" style="font-family: 'Nanum Gothic Coding';">
       [[ genre.fields.name ]]
     </option>
   </select>

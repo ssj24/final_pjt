@@ -1,22 +1,27 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
+{% block css %}
+
+{% endblock css %}
+
 {% block content %}
-<br><br><br><br>
+<br><br><h1 style="font-size: 3rem; width=100%; font-weight: bold; text-shadow: 2px 2px 5px #999;" class="text-center">{{ movie.title }}</h1><br><br>
 <a href="{% url 'movies:list' %}" class="a-c">BACK</a>
 <br><br><br>
+{% if movie.teaser != '' %}
+<iframe width="100%" height="615" src="http://www.youtube.com/embed/{{movie.teaser}}?&autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% else %}
 
-<div class="card mb-3">
-  <div class="row no-gutters">
-    <div class="col-md-4">
-      <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" class="card-img align-center" alt="{{ movie.title }}image" data-toggle="modal" data-target="#exampleModal">
+{% endif %}
+<div class="card mb-3" style="border-style:none;">
+  <div class="row no-gutters" style="border-style:none;">
+    
       
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h4 class="card-title">{{ movie.title }}</h4>
+    <div class="" style="position: relative; border-style:none;">
+      <div class="card-body" style="border-style:none;">
         
         <p class="card-text">{{ movie.summary }}</p>
-        <div class="d-flex align-items-bottom">
+        <div style="position: relative; bottom: 0; right: 5px;">
           <p class="card-text text-right"><small class="text-muted">개봉일: {{ movie.start_date }}</small></p>
           <p class="card-text text-right"><small class="text-muted">감독: {{ movie.director }}  </small></p>
           <p class="card-text text-right"><small class="text-muted">장르: 
@@ -32,17 +37,13 @@
               {% endif %}
             {% endif %}
             <span id="like-count-{{ movie.pk }}">{{ movie.like_users.count }}</span>명이 이 영화를 좋아합니다.
-        </p>
+          </p>
         </div>
       </div>
     </div>
   </div>
 </div>
-{% if movie.teaser != '' %}
-<iframe width="100%" height="615" src="http://www.youtube.com/embed/{{movie.teaser}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-{% else %}
 
-{% endif %}
 <hr>
 <h1>주요 출연진</h1>
 <div class="card-deck" style="width: 1000px;">
@@ -56,6 +57,7 @@
   </div>
   {% endfor %}
 </div>
+
 
 <hr>
 <h4 class="d-inline">관람객 평점</h4>
@@ -158,9 +160,34 @@
         })
     })
   })
+
+/*
+    Carousel
+*/
+$('#carousel-example').on('slide.bs.carousel', function (e) {
+    /*
+        CC 2.0 License Iatek LLC 2018 - Attribution required
+    */
+    var $e = $(e.relatedTarget);
+    var idx = $e.index();
+    var itemsPerSlide = 5;
+    var totalItems = $('.carousel-item').length;
+ 
+    if (idx >= totalItems-(itemsPerSlide-1)) {
+        var it = itemsPerSlide - (totalItems - idx);
+        for (var i=0; i<it; i++) {
+            // append slides to end
+            if (e.direction=="left") {
+                $('.carousel-item').eq(i).appendTo('.carousel-inner');
+            }
+            else {
+                $('.carousel-item').eq(0).appendTo('.carousel-inner');
+            }
+        }
+    }
+});
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script>
-</script>
+
 {% endblock script %}
