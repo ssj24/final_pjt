@@ -1,5 +1,421 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
+{% load static %}
+
+{% block css %}
+#itemslider h4{
+font-family: 'Josefin Sans', sans-serif;
+font-weight: 400;
+font-size: 12px;
+margin: 10px auto 3px;
+}
+#itemslider h5{
+font-family: 'Josefin Sans', sans-serif;
+font-weight: bold;
+font-size: 12px;
+margin: 3px auto 2px;
+}
+#itemslider h6{
+font-family: 'Josefin Sans', sans-serif;
+font-weight: 300;;
+font-size: 10px;
+margin: 2px auto 5px;
+}
+.badge {
+background: #b20c0c;
+position: absolute;
+height: 40px;
+width: 40px;
+border-radius: 50%;
+line-height: 31px;
+font-family: 'Josefin Sans', sans-serif;
+font-weight: 300;
+font-size: 14px;
+border: 2px solid #FFF;
+box-shadow: 0 0 0 1px #b20c0c;
+top: 5px;
+right: 25%;
+}
+#slider-control img{
+padding-top: 60%;
+margin: 0 auto;
+}
+@media screen and (max-width: 992px){
+#slider-control img {
+padding-top: 70px;
+margin: 0 auto;
+}
+}
+
+.carousel-showmanymoveone .carousel-control {
+width: 4%;
+background-image: none;
+}
+.carousel-showmanymoveone .carousel-control.left {
+margin-left: 5px;
+}
+.carousel-showmanymoveone .carousel-control.right {
+margin-right: 5px;
+}
+.carousel-showmanymoveone .cloneditem-1,
+.carousel-showmanymoveone .cloneditem-2,
+.carousel-showmanymoveone .cloneditem-3,
+.carousel-showmanymoveone .cloneditem-4,
+.carousel-showmanymoveone .cloneditem-5 {
+display: none;
+}
+@media all and (min-width: 768px) {
+.carousel-showmanymoveone .carousel-inner > .active.left,
+.carousel-showmanymoveone .carousel-inner > .prev {
+left: -50%;
+}
+.carousel-showmanymoveone .carousel-inner > .active.right,
+.carousel-showmanymoveone .carousel-inner > .next {
+left: 50%;
+}
+.carousel-showmanymoveone .carousel-inner > .left,
+.carousel-showmanymoveone .carousel-inner > .prev.right,
+.carousel-showmanymoveone .carousel-inner > .active {
+left: 0;
+}
+.carousel-showmanymoveone .carousel-inner .cloneditem-1 {
+display: block;
+}
+}
+@media all and (min-width: 768px) and (transform-3d), all and (min-width: 768px) and (-webkit-transform-3d) {
+.carousel-showmanymoveone .carousel-inner > .item.active.right,
+.carousel-showmanymoveone .carousel-inner > .item.next {
+-webkit-transform: translate3d(50%, 0, 0);
+transform: translate3d(50%, 0, 0);
+left: 0;
+}
+.carousel-showmanymoveone .carousel-inner > .item.active.left,
+.carousel-showmanymoveone .carousel-inner > .item.prev {
+-webkit-transform: translate3d(-50%, 0, 0);
+transform: translate3d(-50%, 0, 0);
+left: 0;
+}
+.carousel-showmanymoveone .carousel-inner > .item.left,
+.carousel-showmanymoveone .carousel-inner > .item.prev.right,
+.carousel-showmanymoveone .carousel-inner > .item.active {
+-webkit-transform: translate3d(0, 0, 0);
+transform: translate3d(0, 0, 0);
+left: 0;
+}
+}
+@media all and (min-width: 992px) {
+.carousel-showmanymoveone .carousel-inner > .active.left,
+.carousel-showmanymoveone .carousel-inner > .prev {
+left: -16.666%;
+}
+.carousel-showmanymoveone .carousel-inner > .active.right,
+.carousel-showmanymoveone .carousel-inner > .next {
+left: 16.666%;
+}
+.carousel-showmanymoveone .carousel-inner > .left,
+.carousel-showmanymoveone .carousel-inner > .prev.right,
+.carousel-showmanymoveone .carousel-inner > .active {
+left: 0;
+}
+.carousel-showmanymoveone .carousel-inner .cloneditem-2,
+.carousel-showmanymoveone .carousel-inner .cloneditem-3,
+.carousel-showmanymoveone .carousel-inner .cloneditem-4,
+.carousel-showmanymoveone .carousel-inner .cloneditem-5,
+.carousel-showmanymoveone .carousel-inner .cloneditem-6 {
+display: block;
+}
+}
+@media all and (min-width: 992px) and (transform-3d), all and (min-width: 992px) and (-webkit-transform-3d) {
+.carousel-showmanymoveone .carousel-inner > .item.active.right,
+.carousel-showmanymoveone .carousel-inner > .item.next {
+-webkit-transform: translate3d(16.666%, 0, 0);
+transform: translate3d(16.666%, 0, 0);
+left: 0;
+}
+.carousel-showmanymoveone .carousel-inner > .item.active.left,
+.carousel-showmanymoveone .carousel-inner > .item.prev {
+-webkit-transform: translate3d(-16.666%, 0, 0);
+transform: translate3d(-16.666%, 0, 0);
+left: 0;
+}
+.carousel-showmanymoveone .carousel-inner > .item.left,
+.carousel-showmanymoveone .carousel-inner > .item.prev.right,
+.carousel-showmanymoveone .carousel-inner > .item.active {
+-webkit-transform: translate3d(0, 0, 0);
+transform: translate3d(0, 0, 0);
+left: 0;
+}
+}
+
+/**
+* Oscuro: #283035
+* Azul: #03658c
+* Detalle: #c7cacb
+* Fondo: #dee1e3
+----------------------------------*/
+* {
+margin: 0;
+padding: 0;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+}
+
+a {
+color: #03658c;
+text-decoration: none;
+}
+
+ul {
+list-style-type: none;
+}
+
+body {
+font-family: 'Roboto', Arial, Helvetica, Sans-serif, Verdana;
+background: #dee1e3;
+}
+
+/** ====================
+* Lista de Comentarios
+=======================*/
+.comments-container {
+margin: 0;
+width: 100%;
+
+}
+
+.comments-container h1 {
+font-size: 36px;
+color: #283035;
+font-weight: 400;
+}
+
+.comments-container h1 a {
+font-size: 18px;
+font-weight: 700;
+}
+
+.comments-list {
+margin-top: 30px;
+position: relative;
+}
+
+/**
+* Lineas / Detalles
+-----------------------*/
+.comments-list:before {
+content: '';
+width: 2px;
+height: 100%;
+background: #c7cacb;
+position: absolute;
+left: 32px;
+top: 0;
+}
+
+.comments-list:after {
+content: '';
+position: absolute;
+background: #c7cacb;
+bottom: 0;
+left: 27px;
+width: 7px;
+height: 7px;
+border: 3px solid #dee1e3;
+-webkit-border-radius: 50%;
+-moz-border-radius: 50%;
+border-radius: 50%;
+}
+
+.reply-list:before, .reply-list:after {display: none;}
+.reply-list li:before {
+content: '';
+width: 60px;
+height: 2px;
+background: #c7cacb;
+position: absolute;
+top: 25px;
+left: -55px;
+}
+
+
+.comments-list li {
+margin-bottom: 15px;
+display: block;
+position: relative;
+}
+
+.comments-list li:after {
+content: '';
+display: block;
+clear: both;
+height: 0;
+width: 0;
+}
+
+.reply-list {
+padding-left: 88px;
+clear: both;
+margin-top: 15px;
+}
+/**
+* Avatar
+---------------------------*/
+.comments-list .comment-avatar {
+width: 65px;
+height: 65px;
+position: relative;
+z-index: 99;
+float: left;
+border: 3px solid #FFF;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+overflow: hidden;
+}
+
+.comments-list .comment-avatar img {
+width: 100%;
+height: 100%;
+}
+
+.reply-list .comment-avatar {
+width: 50px;
+height: 50px;
+}
+
+.comment-main-level:after {
+content: '';
+width: 0;
+height: 0;
+display: block;
+clear: both;
+}
+/**
+* Caja del Comentario
+---------------------------*/
+.comments-list .comment-box {
+width: 92%;
+float: right;
+position: relative;
+-webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+-moz-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+}
+
+.comments-list .comment-box:before, .comments-list .comment-box:after {
+content: '';
+height: 0;
+width: 0;
+position: absolute;
+display: block;
+border-width: 10px 12px 10px 0;
+border-style: solid;
+border-color: transparent #FCFCFC;
+top: 8px;
+left: -11px;
+}
+
+.comments-list .comment-box:before {
+border-width: 11px 13px 11px 0;
+border-color: transparent rgba(0,0,0,0.05);
+left: -12px;
+}
+
+.reply-list .comment-box {
+width: 610px;
+}
+.comment-box .comment-head {
+background: #FCFCFC;
+padding: 10px 12px;
+border-bottom: 1px solid #E5E5E5;
+overflow: hidden;
+-webkit-border-radius: 4px 4px 0 0;
+-moz-border-radius: 4px 4px 0 0;
+border-radius: 4px 4px 0 0;
+}
+
+.comment-box .comment-head i {
+float: right;
+margin-left: 14px;
+position: relative;
+top: 2px;
+color: #A6A6A6;
+cursor: pointer;
+-webkit-transition: color 0.3s ease;
+-o-transition: color 0.3s ease;
+transition: color 0.3s ease;
+}
+
+.comment-box .comment-head i:hover {
+color: #03658c;
+}
+
+.comment-box .comment-name {
+color: #283035;
+font-size: 14px;
+font-weight: 700;
+float: left;
+margin-right: 10px;
+}
+
+.comment-box .comment-name a {
+color: #283035;
+}
+
+.comment-box .comment-head span {
+float: left;
+color: #999;
+font-size: 13px;
+position: relative;
+top: 1px;
+}
+
+.comment-box .comment-content {
+background: #FFF;
+padding: 12px;
+font-size: 15px;
+color: #595959;
+-webkit-border-radius: 0 0 4px 4px;
+-moz-border-radius: 0 0 4px 4px;
+border-radius: 0 0 4px 4px;
+}
+
+.comment-box .comment-name.by-author, .comment-box .comment-name.by-author a {color: #03658c;}
+.comment-box .comment-name.by-author:after {
+content: 'autor';
+background: #03658c;
+color: #FFF;
+font-size: 12px;
+padding: 3px 5px;
+font-weight: 700;
+margin-left: 10px;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+}
+
+/** =====================
+* Responsive
+========================*/
+@media only screen and (max-width: 766px) {
+.comments-container {
+width: 480px;
+}
+
+.comments-list .comment-box {
+width: 390px;
+}
+
+.reply-list .comment-box {
+width: 320px;
+}
+}
+{% endblock %}
+
 {% block content %}
 <br><br><br><br>
 <a href="{% url 'movies:list' %}" class="a-c">BACK</a>
@@ -8,114 +424,115 @@
 <div class="card mb-3">
   <div class="row no-gutters">
     <div class="col-md-4">
-      <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" class="card-img align-center" alt="{{ movie.title }}image" data-toggle="modal" data-target="#exampleModal">
-      
+      <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" class="card-img align-center"
+        alt="{{ movie.title }}image" data-toggle="modal" data-target="#exampleModal">
+
     </div>
     <div class="col-md-8">
       <div class="card-body">
         <h4 class="card-title">{{ movie.title }}</h4>
-        
+
         <p class="card-text">{{ movie.summary }}</p>
         <div class="d-flex align-items-bottom">
           <p class="card-text text-right"><small class="text-muted">개봉일: {{ movie.start_date }}</small></p>
-          <p class="card-text text-right"><small class="text-muted">감독: {{ movie.director }}  </small></p>
-          <p class="card-text text-right"><small class="text-muted">장르: 
-            {% for genre in movie.genres.all %}
+          <p class="card-text text-right"><small class="text-muted">감독: {{ movie.director }} </small></p>
+          <p class="card-text text-right"><small class="text-muted">장르:
+              {% for genre in movie.genres.all %}
               {{ genre }}
-            {% endfor %}</small></p>
+              {% endfor %}</small></p>
           <p class="card-text text-right align-bottom">
             {% if user.is_authenticated %}
-              {% if user in movie.like_users.all %}
-              <i class="fas fa-heart like-button" style="color: crimson;" data-id="{{ movie.pk }}"></i>
-              {% else %}
-              <i class="fas fa-heart like-button" style="color: black;" data-id="{{ movie.pk }}"></i>
-              {% endif %}
+            {% if user in movie.like_users.all %}
+            <i class="fas fa-heart like-button" style="color: crimson;" data-id="{{ movie.pk }}"></i>
+            {% else %}
+            <i class="fas fa-heart like-button" style="color: black;" data-id="{{ movie.pk }}"></i>
+            {% endif %}
             {% endif %}
             <span id="like-count-{{ movie.pk }}">{{ movie.like_users.count }}</span>명이 이 영화를 좋아합니다.
-        </p>
+          </p>
         </div>
       </div>
     </div>
   </div>
 </div>
 {% if movie.teaser != '' %}
-<iframe width="100%" height="615" src="http://www.youtube.com/embed/{{movie.teaser}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="100%" height="615" src="http://www.youtube.com/embed/{{movie.teaser}}" frameborder="0"
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 {% else %}
 
 {% endif %}
 <hr>
-<h1>주요 출연진</h1>
-<div class="card-deck" style="width: 1000px;">
-  {% for cast in casts %}
-  <div class="card">
-    <img src="http://image.tmdb.org/t/p/original/{{ cast.profile_path }}" class="card-img-top" alt="#" width="200px">
-    <div class="card-body">
-      <h5 class="card-title">{{ cast.name }}</h5>
-      <p class="card-text">{{ cast.character }}</p>
+<!-- 출연진 모달 -->
+<!-- Latest compiled and minified CSS -->
+<!-- https://xstore.8theme.com/demos/hosting/-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+  integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+  integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,700&subset=latin-ext" rel="stylesheet">
+
+<!--Item slider text-->
+<div class="container">
+  <div class="row" id="slider-text">
+    <div class="col-md-6">
+      <h2>주요출연진</h2>
     </div>
   </div>
-  {% endfor %}
 </div>
 
-<hr>
-<h4 class="d-inline">관람객 평점</h4>
-<p class="d-inline">  {{ reviews.count }}건</p>
-<p>{{ score_avg }}</p>
+<!-- Item slider-->
+<div class="container-fluid">
 
-{% if user.is_authenticated %}
-<button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#reviewModal">
-  내 평점 등록
-</button>
-{% else %}
-  [댓글을 작성하려면 로그인하세요.]
-{% endif %}
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+      <div class="carousel carousel-showmanymoveone slide" id="itemslider">
+        <div class="carousel-inner">
 
-<br><br>
-{% for review in reviews %}
-<div>
-  <span class="d-inline"> {{ review.user }} | {{ review.score }}점 {{ review.comment }}</span>
-  {% if review.user == request.user %}
-    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#reviewUpdateModal">
-      수정
-    </button>
-
-    <form action="{% url 'movies:review_delete' movie.pk review.pk %}" method="POST" class="d-inline">
-      {% csrf_token %}
-      <input type="submit" value="DELETE" class="btn btn-outline-danger p-1">
-    </form>
-  {% endif %}
-  <div class="modal fade" id="reviewUpdateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">내 평점 등록</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <div class="item active">
+            <div class="col-xs-12 col-sm-6 col-md-2">
+              <img src="http://image.tmdb.org/t/p/original/{{ cast_first.profile_path }}"
+                class="img-responsive center-block" style="border-radius:5px;">
+              <h4 class="text-center">{{ cast_first.name }}</h4>
+              <h5 class="text-center">{{ cast_first.character }}</h5>
+            </div>
+          </div>
+          {% for cast in casts %}
+          <div class="item">
+            <div class="col-xs-12 col-sm-6 col-md-2">
+              <img src="http://image.tmdb.org/t/p/original/{{ cast.profile_path }}" class="img-responsive center-block"
+                style="border-radius:5px;">
+              <h4 class="text-center">{{ cast.name }}</h4>
+              <h5 class="text-center">{{ cast.character }}</h5>
+            </div>
+          </div>
+          {% endfor %}
         </div>
-        <div class="modal-body">
-          <form action="{% url 'movies:review_update' movie.pk review.pk %}" method="POST">
-            {% csrf_token %}
-            <input type="text" value="{{review.comment}}">
-            <input type="number" value="{{review.score}}">
-        <div class="modal-footer">
-          <input type="submit" value="submit" class="btn btn-outline-info">
-        </div>
-        </form>
+
+        <div id="slider-control">
+          <a class="left carousel-control" href="#itemslider" data-slide="prev">
+            <img src="https://cdn0.iconfinder.com/data/icons/website-kit-2/512/icon_402-512.png" alt="Left"
+              class="img-responsive"></a>
+          <a class="right carousel-control" href="#itemslider" data-slide="next">
+            <img src="http://pixsector.com/cache/81183b13/avcc910c4ee5888b858fe.png" alt="Right"
+              class="img-responsive"></a>
         </div>
       </div>
     </div>
   </div>
-{% empty %}
-  <p><b>댓글이 없습니다.</b></p>
 </div>
-{% endfor %}
-
-<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<hr>
+<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">내 평점 등록</h5>
+        <h3 class="modal-title" id="exampleModalLabel">내 평점 등록</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -124,43 +541,130 @@
         <form action="{% url 'movies:review_create' movie.pk %}" method="POST">
           {% csrf_token %}
           {% bootstrap_form review_form %}
-            <div class="modal-footer">
-              <input type="submit" value="submit" class="btn btn-outline-info">
-            </div>
+          <div class="modal-footer">
+            <input type="submit" value="submit" class="navi" style="border:solid 1px #999; border-radius: 5px; padding:5px;">
+          </div>
         </form>
       </div>
     </div>
   </div>
 </div>
-{% endblock content %}
+<!-- Contenedor Principal -->
+<div class="comments-container">
+  <h2 class="d-inline">관람객 평점  {{ reviews.count }}건</h2>
+  {% if user.is_authenticated %}
+  <button type="button" class="navi float-right" data-toggle="modal" data-target="#reviewModal" style="border:solid 1px #999; border-radius: 5px; padding:5px;">
+    내 평점 등록
+  </button>
+  {% else %}
+  [댓글을 작성하려면 로그인하세요.]
+  {% endif %}
+  <ul id="comments-list" class="comments-list">
+    {% for review in reviews %}
+    <li>
+      <div class="comment-main-level">
+        <!-- Avatar -->
+        <div class="comment-avatar"><img src="{% static 'movies/img/user.png' %}" alt="#"></div>
+        <!-- Contenedor del Comentario -->
+        <div class="comment-box">
+          <div class="comment-head">
+            <h6 class="comment-name"><a href="{% url 'accounts:user_detail' user.id %}">{{review.user}}</a></h6>
+            <p class="d-inline">⭐ {{review.score}} 점</p>
+            {% if review.user == request.user %}
+            <form action="{% url 'movies:review_delete' movie.pk review.pk %}" method="POST" class="d-inline float-right">
+            {% csrf_token %}
+            &nbsp;&nbsp;
+            <input type="submit" value="🗑️" class="fa fa-trash-alt" style="height:25px; border:0; background:none;">
+            </form>
+            <button class="float-right" data-toggle="modal" data-target="#reviewUpdateModal" style="height:25px; border:0; background:none;">✏️</button>
+            {% endif %}
+            <div class="modal fade" id="reviewUpdateModal" tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">내 평점 수정</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="{% url 'movies:review_update' movie.pk review.pk %}" method="POST">
+                      {% csrf_token %}
+                      <h4>Score</h4>
+                      <input type="number" value="{{ review.score }}" style="border-radius: 4px">
+                      <br><br>
+                      <h4>Comment</h4>
+                      <input type="text" value="{{ review.comment }}" style="border-radius: 4px">
+                      <div class="modal-footer">
+                      <input type="submit" value="submit" class="navi" style="border:solid 1px #999; border-radius: 5px; padding:5px;">
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br><br>
+            <div class="comment-content">
+              {{review.comment}}
+            </div>
+          </div>
+        </div>
+    </li>
+    {% empty %}
+    <p class="text-center"><b>댓글이 없습니다.</b></p>
+    {% endfor %}
+  </ul>
+  {% endblock content %}
 
-{% block script %}
-<script>
-  const likebuttons = document.querySelectorAll('.like-button')
-  likebuttons.forEach(button => {
-    button.addEventListener('click', function (event) {
+  {% block script %}
+  <script>
+    const likebuttons = document.querySelectorAll('.like-button')
+    likebuttons.forEach(button => {
+      button.addEventListener('click', function (event) {
 
-      const movieId = event.target.dataset.id
-      // console.log(typeof (movieId))
-      // 해상 상세 게시글의 좋아요 요청을 보낸다.
-      axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-      axios.defaults.xsrfCookieName = 'csrftoken'
-      axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-      axios.post(`/movies/${movieId}/like/`)
-        .then(response => {
-          // console.log(response)
-          document.querySelector(`#like-count-${movieId}`).innerText = response.data.count
-          if (response.data.liked) {
-            event.target.style.color = 'crimson'
-          } else {
-            event.target.style.color = 'black'
-          }
-        })
+        const movieId = event.target.dataset.id
+        // console.log(typeof (movieId))
+        // 해상 상세 게시글의 좋아요 요청을 보낸다.
+        axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+        axios.defaults.xsrfCookieName = 'csrftoken'
+        axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+        axios.post(`/movies/${movieId}/like/`)
+          .then(response => {
+            // console.log(response)
+            document.querySelector(`#like-count-${movieId}`).innerText = response.data.count
+            if (response.data.liked) {
+              event.target.style.color = 'crimson'
+            } else {
+              event.target.style.color = 'black'
+            }
+          })
+      })
     })
-  })
-</script>
+  </script>
 
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script>
-</script>
-{% endblock script %}
+  <script>
+    $(document).ready(function () {
+
+      $('#itemslider').carousel({
+        interval: 3000
+      });
+
+      $('.carousel-showmanymoveone .item').each(function () {
+        var itemToClone = $(this);
+
+        for (var i = 1; i < 6; i++) {
+          itemToClone = itemToClone.next();
+
+          if (!itemToClone.length) {
+            itemToClone = $(this).siblings(':first');
+          }
+
+          itemToClone.children(':first-child').clone()
+            .addClass("cloneditem-" + (i))
+            .appendTo($(this));
+        }
+      });
+    });
+  </script>
+  {% endblock script %}
