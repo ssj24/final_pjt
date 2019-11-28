@@ -1,35 +1,94 @@
 {% extends 'base.html' %}
 {% block css %}
-.nav-c:hover {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #000;
+.nav-cc {
+border: solid 1px #999;
+padding: 5px;
+font-size: 0.9rem;
+border-radius: 5px;
+}
+.nav-cc:hover {
+font-size: 1rem;
+font-weight: bold;
+color: #000;
+
 }
 .navi:hover {
-  font-size: 1rem;
-  font-weight: bold;
+font-size: 1rem;
+font-weight: bold;
+}
+.a-c {
+border: 0;
+padding: 5px;
+background: transparent;
 }
 
+.a-c:hover {
+paddiing: 0;
+}
 
 .speech-bubble {
-	position: relative;
-	background: #fbfffc;
-	border-radius: .4em;
+position: relative;
+top:-50%;
+
+border-radius: .4em;
+background-color: rgba(0, 0, 0, 0.85);
+color: #fff;
 }
 
-.speech-bubble:after {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 50%;
-	width: 0;
-	height: 0;
-	border: 20px solid transparent;
-	border-bottom-color: #fbfffc;
-	border-top: 0;
-	border-right: 0;
-	margin-left: -10px;
-	margin-top: -20px;
+.speech-bubble a {
+color: #fff;
+}
+
+.example-open .modal-backdrop {background-color: #fff;}
+
+.modal-header {
+
+}
+
+.modal-body a:hover {
+text-decoration: underline solid red !important;
+}
+
+.modal-footer {
+border-top: 0 none;
+}
+
+.modal-content {
+padding: 5px 30px;
+}
+
+.close {
+color: #fff;
+opacity: 1;
+}
+
+.close:hover {
+color: #ff0000;
+}
+
+.a-cf {
+font-weight: bold;
+border: solid 1px #666;
+padding: 5px 10px;
+border-radius: 10px;
+}
+.a-cf:hover {
+font-size: 1.2rem;
+color: #ff0000;
+padding: 2px 8px;
+cursor: pointer;
+}
+
+.follow-c:hover {
+cursor: pointer;
+}
+
+.mid-left, .mid-right {
+  display: inline;
+  border: 1px solid #999;
+  width: 50%;
+  border-radius: 25px;
+  margin: 5px;
 }
 
 {% endblock css %}
@@ -38,29 +97,51 @@
   <br>
   {% with followers=auth_user.follow_user.all followings=auth_user.following_user.all %}
   <div class="d-flex justify-content-center align-items-center">
-    <h2 class="d-inline">{{ auth_user.username }}</h2>
+    div
+    <h2 class="d-inline" style="font-family: 'East Sea Dokdo'; font-size: 4rem;">{{ auth_user.username }}</h2>
+    &nbsp;&nbsp;&nbsp;
+    {% if user.is_authenticated %}
+    {% if user != auth_user %}
+    {% if user in follwers %}
+
+    <span class="a-cf follow" data-id="{{ auth_user.pk }}">-</span>
+    {% else %}
+    <span class="a-cf follow" data-id="{{ auth_user.pk }}">+</span>
+
+    {% endif %}
+    {% endif %}
+    {% endif %}
+
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <div class="d-inline">
-      <h5 class="mb-0" style="font-size: 1.4rem; font-weight: bold;"><span id="follow-count-{{auth_user.pk}}">{{ auth_user.follow_user.count }}</span></h5> 
-      <br>
+      <h5 class="mb-0 follow-c d-inline" style="font-size: 1.4rem; font-weight: bold; line-height: 0;" data-toggle="modal"
+        data-target="#followers"><span id="follow-count-{{auth_user.pk}}">{{ auth_user.follow_user.count }}</span></h5>
+
       
-      <button type="button" class="a-c" data-toggle="modal" data-target="#followers">
-        followers
+      <br>
+      <button type="button" class="a-c d-inline" data-toggle="modal" data-target="#followers">
+        <p style="font-size: 1rem;">
+        follower
+        </p>
       </button>
 
       <!-- Modal -->
-      <div class="modal fade" id="followers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal fade" id="followers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalCenterTitle">FOLLOWERS</h5>
+              <h5 class="modal-title" id="exampleModalCenterTitle">FOLLOWER</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
               {% for following in followers %}
-                <a href="{% url 'accounts:user_detail' following.pk %}"><option value="following.username">{{following.username}}</option></a>
+              <a href="{% url 'accounts:user_detail' following.pk %}" class="nav-c" style="color:#fff;">
+                <h2 style="font-family: 'East Sea Dokdo'; font-size: 4rem;">{{following.username}}</h2>
+              </a>
+
               {% endfor %}
             </div>
             <div class="modal-footer">
@@ -70,20 +151,22 @@
           </div>
         </div>
       </div>
-
-
-      
     </div>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <div class="d-inline">
-      <h5 class="mb-0" style="font-size: 1.4rem; font-weight: bold;">{{ followings|length }}</h5> 
+      <h5 class="mb-0 follow-c d-inline" style="font-size: 1.4rem; font-weight: bold; line-height: 0;" data-toggle="modal"
+        data-target="#exampleModalCenter">{{ followings|length }}</h5>
+
       <br>
-      <button type="button" class="a-c" data-toggle="modal" data-target="#exampleModalCenter">
+      <button type="button d-inline" class="a-c" data-toggle="modal" data-target="#exampleModalCenter">
+        <p style="font-size: 1rem;">
         follow
+        </p>
       </button>
 
       <!-- Modal -->
-      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -94,7 +177,10 @@
             </div>
             <div class="modal-body">
               {% for following in followings %}
-                <a href="{% url 'accounts:user_detail' following.pk %}"><option value="following.username">{{following.username}}</option></a>
+              <a href="{% url 'accounts:user_detail' following.pk %}">
+                <h2 style="font-family: 'East Sea Dokdo'; font-size: 4rem;">{{following.username}}</h2>
+              </a>
+
               {% endfor %}
             </div>
             <div class="modal-footer">
@@ -104,9 +190,9 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
+
   {% if user == auth_user %}
   <a class="nav-item nav-link nav-c d-inline" href="{% url 'accounts:update' %}" role="tab">정보수정</a>
   <a class="nav-item nav-link nav-c d-inline" href="{% url 'accounts:change_password' %}" role="tab">비밀번호 변경</a>
@@ -116,25 +202,36 @@
       <input type="submit" value="회원탈퇴" class="navi">
     </form>
   </a>
-  
   <hr>
-  <ul>
-  {% for now_id in movie_id_list %}
-    <h5 class="d-inline">{{ now_id.title }}</h5>에 남기신 리뷰입니다.
-    {% for review in ratings %}
-      {% if now_id.id == review.movie_id %}
-        <li>{{ review.score }} | {{ review.comment }}</li>
-      {% endif %}
-    {% endfor %}
-  {% endfor %}
-
-  </ul>
-  
   {% endif %}
-  <div class="d-flex">
-    {% for movie in movies %}
-      <div class="card p-0 d-inline" style="width: 18rem;">
-        <img src="http://image.tmdb.org/t/p/original/{{movie.poster_url}}" class="card-img-top" alt="좋아하는 영화 이미지" width="100%" height="80%">
+  {% if user == auth_user %}
+  <div class="mid-content d-flex justify-contents-center" style="width: 100%; min-height: 300px;">
+    <div class="mid-left">
+      {% if ratings|length %}
+      <ul>
+        {% for review in ratings %}
+        <li>
+          <h5 class="d-inline"><a href="{% url 'movies:detail' review.movie.pk %}">{{ review.movie.title }}</a></h5>에
+          남기신
+          리뷰입니다.
+        </li>
+        <li>{{ review.score }} | {{ review.comment }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p style="line-height: 300px;">아직 {{auth_user.username}}님이 남기신 리뷰가 없습니다ㅠㅠ</p>
+      {% endif %}
+    </div>
+    <div class="mid-right text-center">
+  {% else %}
+    <div class="mid-content text-center">
+  {% endif %}
+      {% if movies %}
+      {% for movie in movies %}
+      <div class="card p-0 d-inline" style="width: 18rem; height: 30rem;">
+        <img src="http://image.tmdb.org/t/p/original/{{movie.poster_url}}" class="card-img-top" alt="좋아하는 영화 이미지"
+          width="100%" height="80%">
+
         <div class="card-body">
           <p class="card-text">
             <a href="{% url 'movies:detail' movie.pk %}">
@@ -143,49 +240,60 @@
           </p>
         </div>
       </div>
-      
-    {% endfor %}
-  </div>
 
-    
-    <hr>
-    {% if user.is_authenticated %}
-      {% if user != auth_user %}
-        {% if user in follwers %}
-          <span class="a-c follow" data-id="{{ auth_user.pk }}">UnFollow</span>
-        {% else %}
-          <span class="a-c follow" data-id="{{ auth_user.pk }}">Follow</span>
-
-        {% endif %}
+      {% endfor %}
+      {% else %}
+      <p style="line-height: 300px;">아직 {{auth_user.username}}님은 마음에 드는 영화를 찾지 못 했습니다</p>
       {% endif %}
-    {% endif %}
-  {% endwith %}
+    </div>
   </div>
-  <a href="{% url 'accounts:index' %}" class="a-c">BACK</a>
+
+  {% if randomf and randomm %}
+  오늘은 <span style="text-decoration: underline solid #ff0000;">{{ randomf.username }}님</span>이 추천하는 영화를 보는 건 어떨까요?
+  <a href="{% url 'movies:detail' randomm.pk %}">
+    <h2>{{ randomm.title }}</h2>
+  </a>
+  {% endif %}
+  {% endwith %}
+</div>
+<div class="container">
+  <a href="{% url 'accounts:index' %}" class="a-c float-right">BACK</a>
+</div>
+<br><br>
 {% endblock content %}
 {% block script %}
 <script>
-const follows = document.querySelectorAll('.follow')
-follows.forEach(button => {
-  button.addEventListener('click', function(event) {
-    const followId = event.target.dataset.id
-    axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-    axios.defaults.xsrfCookieName = 'csrftoken'
-    axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-    axios.get(`/accounts/follow/${followId}/`)
-      .then(response => {
-        document.querySelector(`#follow-count-${followId}`).innerText = response.data.count
-        if (response.data.followed) {
-          
-          event.target.innerText = "UnFollow"
-        } else {
-          
-          event.target.innerText = "Follow"
-        }
-      })
-      .catch(error => console.log(error))
+  const follows = document.querySelectorAll('.follow')
+  follows.forEach(button => {
+    button.addEventListener('click', function (event) {
+      const followId = event.target.dataset.id
+      axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+      axios.defaults.xsrfCookieName = 'csrftoken'
+      axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+      axios.get(`/accounts/follow/${followId}/`)
+        .then(response => {
+          if (response.data.followed) {
+
+            event.target.innerText = "-"
+          } else {
+
+            event.target.innerText = "+"
+          }
+          document.querySelector(`#follow-count-${followId}`).innerText = response.data.count
+        })
+        .catch(error => console.log(error))
+    })
   })
-})
+  $('#exampleModalCenter').on('show.bs.modal', function (e) {
+    $('body').addClass("example-open");
+  }).on('hide.bs.modal', function (e) {
+    $('body').removeClass("example-open");
+  })
+  $('#followers').on('show.bs.modal', function (e) {
+    $('body').addClass("example-open");
+  }).on('hide.bs.modal', function (e) {
+    $('body').removeClass("example-open");
+  })
 
 </script>
 {% endblock script %}
