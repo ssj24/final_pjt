@@ -76,7 +76,10 @@ def review_update(request, movie_pk, review_pk):
         if request.method == 'POST':
             review_update_form = RatingForm(request.POST, instance=review)
             if review_update_form.is_valid():
-                review = review_update_form.save()
+                review = review_update_form.save(commit=False)
+                review.movie = movie
+                review.user = request.user
+                review.save()
                 return redirect('movies:detail', movie_pk)
     return redirect('movies:detail', movie_pk)
     

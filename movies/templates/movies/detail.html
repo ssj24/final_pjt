@@ -414,26 +414,37 @@ width: 390px;
 width: 320px;
 }
 }
+
+.btn-c {
+  border: 0;
+  background: none;
+}
+.btn-c:hover {
+  font-size: 1.9rem;
+  text-decoration: underline solid red !important;
+}
 {% endblock %}
 
 {% block content %}
-<br><br><br><br>
+<br><br><h1 style="font-size: 3rem; width=100%; font-weight: bold; text-shadow: 2px 2px 5px #999;" class="text-center">{{ movie.title }}</h1><br><br>
 <a href="{% url 'movies:list' %}" class="a-c">BACK</a>
 <br><br><br>
+{% if movie.teaser != '' %}
+<iframe width="100%" height="615" src="http://www.youtube.com/embed/{{movie.teaser}}?&autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+{% else %}
 
-<div class="card mb-3">
-  <div class="row no-gutters">
-    <div class="col-md-4">
-      <img src="http://image.tmdb.org/t/p/original/{{ movie.poster_url }}" class="card-img align-center"
-        alt="{{ movie.title }}image" data-toggle="modal" data-target="#exampleModal">
 
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h4 class="card-title">{{ movie.title }}</h4>
+{% endif %}
+<div class="card mb-3" style="border-style:none;">
+  <div class="row no-gutters" style="border-style:none;">
+    
+      
+    <div class="" style="position: relative; border-style:none;">
+      <div class="card-body" style="border-style:none;">
+        
 
         <p class="card-text">{{ movie.summary }}</p>
-        <div class="d-flex align-items-bottom">
+        <div style="position: relative; bottom: 0; right: 5px;">
           <p class="card-text text-right"><small class="text-muted">개봉일: {{ movie.start_date }}</small></p>
           <p class="card-text text-right"><small class="text-muted">감독: {{ movie.director }} </small></p>
           <p class="card-text text-right"><small class="text-muted">장르:
@@ -455,12 +466,8 @@ width: 320px;
     </div>
   </div>
 </div>
-{% if movie.teaser != '' %}
-<iframe width="100%" height="615" src="http://www.youtube.com/embed/{{movie.teaser}}" frameborder="0"
-  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-{% else %}
 
-{% endif %}
+
 <hr>
 <!-- 출연진 모달 -->
 <!-- Latest compiled and minified CSS -->
@@ -477,14 +484,6 @@ width: 320px;
   integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400,700&subset=latin-ext" rel="stylesheet">
 
-<!--Item slider text-->
-<div class="container">
-  <div class="row" id="slider-text">
-    <div class="col-md-6">
-      <h2>주요출연진</h2>
-    </div>
-  </div>
-</div>
 
 <!-- Item slider-->
 <div class="container-fluid">
@@ -542,7 +541,7 @@ width: 320px;
           {% csrf_token %}
           {% bootstrap_form review_form %}
           <div class="modal-footer">
-            <input type="submit" value="submit" class="navi" style="border:solid 1px #999; border-radius: 5px; padding:5px;">
+            <input type="submit" value="submit" class="btn-c" style="border:solid 1px #999; border-radius: 5px; padding:5px;">
           </div>
         </form>
       </div>
@@ -551,9 +550,9 @@ width: 320px;
 </div>
 <!-- Contenedor Principal -->
 <div class="comments-container">
-  <h2 class="d-inline">관람객 평점  {{ reviews.count }}건</h2>
+  <h3 class="d-inline" style="font-weight: bold;">관람객 평점  <span style="font-size: 3rem;">{{ reviews.count }}</span>건</h3>
   {% if user.is_authenticated %}
-  <button type="button" class="navi float-right" data-toggle="modal" data-target="#reviewModal" style="border:solid 1px #999; border-radius: 5px; padding:5px;">
+  <button type="button" class="btn-c float-right" data-toggle="modal" data-target="#reviewModal" style="border:solid 1px #999; border-radius: 5px; padding:5px;">
     내 평점 등록
   </button>
   {% else %}
@@ -592,12 +591,12 @@ width: 320px;
                     <form action="{% url 'movies:review_update' movie.pk review.pk %}" method="POST">
                       {% csrf_token %}
                       <h4>Score</h4>
-                      <input type="number" value="{{ review.score }}" style="border-radius: 4px">
+                      <input type="number" name="score" value="{{ review.score }}" style="border-radius: 4px">
                       <br><br>
                       <h4>Comment</h4>
-                      <input type="text" value="{{ review.comment }}" style="border-radius: 4px">
+                      <input type="text" name="comment" value="{{ review.comment }}" style="border-radius: 4px">
                       <div class="modal-footer">
-                      <input type="submit" value="submit" class="navi" style="border:solid 1px #999; border-radius: 5px; padding:5px;">
+                      <input type="submit" value="submit" class="btn-c" style="border:solid 1px #999; border-radius: 5px; padding:5px;">
                       </div>
                     </form>
                   </div>
@@ -641,6 +640,7 @@ width: 320px;
           })
       })
     })
+
   </script>
 
   <script>
@@ -668,3 +668,4 @@ width: 320px;
     });
   </script>
   {% endblock script %}
+

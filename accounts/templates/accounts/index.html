@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block css %}
 .button:hover{
   color: #fff !important;
@@ -7,32 +7,22 @@
 {% endblock css %}
 {% block content %}
   <br><br>
-  
+  <h5 style="text-align: right;"><img src="{% static 'accounts/img/theater.png' %}" alt="" width="15px;">는 관리자, <img src="{% static 'accounts/img/corn.png' %}" alt="" width="15px;">는 일반 유저입니다</h5>
   <p style="text-align: right;">총 회원 수는<span style="font-size: 1.5rem; color: #ff0000;"> {{users|length}}</span>명입니다.</p>
-  
+  <br><br>
+  <div class="text-center">
   {% for user in users %}
-    
-    
-
-    <div class="card text-center">
-      
-      <div class="card-body">
-        <h4 class="card-title">{{user.username}}</h4>
-        <p class="card-text">{{user.email}}</p>
-        <a href="{% url 'accounts:user_detail' user.pk %}" class="btn btn-outline-primary button p-1">Detail</a>
-      </div>
-      
-        <div class="card-footer text-muted">
-          {% if user.is_staff %}
-          관리자
-          
-          {% elif not user.is_staff %}
-          일반 유저
-          
-          {% endif %}
-        </div>
-      
-    </div>
+    {% if user.is_staff %}
+      <img src="{% static 'accounts/img/theater.png' %}" alt="" width="20px;">
+        
+    {% elif not user.is_staff %}
+      <img src="{% static 'accounts/img/corn.png' %}" alt="" width="20px;">
+        
+    {% endif %}
+    &nbsp;
+    <a href="{% url 'accounts:user_detail' user.pk %}" class="a-c"><h2 class="d-inline">{{user.username}}</h2></a>
+    <br>
     <br>
   {% endfor %}
+  </div>
 {% endblock %}

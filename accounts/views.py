@@ -91,8 +91,12 @@ def user_detail(request, user_pk):
         if tmp not in movie_id_list:
             movie_id_list.append(tmp)
  
-    movies = auth_user.like_movies.all()
-    context = {'auth_user': auth_user, 'ratings': ratings, 'movies': movies, 'movie_id_list': movie_id_list,}
+    movie_list = list(auth_user.like_movies.all())
+    if len(movie_list) > 1:
+        movie_first = movie_list.pop(0)
+    else:
+        movie_first = ''
+    context = {'auth_user': auth_user, 'ratings': ratings, 'movies': movie_list, 'movie_id_list': movie_id_list, 'movie_first': movie_first,}
     return render(request, 'accounts/detail.html', context)
 
 @login_required
