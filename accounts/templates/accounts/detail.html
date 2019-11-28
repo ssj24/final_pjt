@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block css %}
-
 .nav-cc {
 border: solid 1px #999;
 padding: 5px;
@@ -12,6 +10,7 @@ border-radius: 5px;
 font-size: 1rem;
 font-weight: bold;
 color: #000;
+
 }
 .navi:hover {
 font-size: 1rem;
@@ -92,8 +91,6 @@ cursor: pointer;
   margin: 5px;
 }
 
-
-
 {% endblock css %}
 {% block content %}
 <div class=" text-center">
@@ -119,6 +116,7 @@ cursor: pointer;
     <div class="d-inline">
       <h5 class="mb-0 follow-c d-inline" style="font-size: 1.4rem; font-weight: bold; line-height: 0;" data-toggle="modal"
         data-target="#followers"><span id="follow-count-{{auth_user.pk}}">{{ auth_user.follow_user.count }}</span></h5>
+
       
       <br>
       <button type="button" class="a-c d-inline" data-toggle="modal" data-target="#followers">
@@ -131,7 +129,7 @@ cursor: pointer;
       <div class="modal fade" id="followers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content speech-bubble">
+          <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalCenterTitle">FOLLOWER</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -143,10 +141,12 @@ cursor: pointer;
               <a href="{% url 'accounts:user_detail' following.pk %}" class="nav-c" style="color:#fff;">
                 <h2 style="font-family: 'East Sea Dokdo'; font-size: 4rem;">{{following.username}}</h2>
               </a>
+
               {% endfor %}
             </div>
             <div class="modal-footer">
-              <button type="button" class="a-c" style="color:#fff;" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
             </div>
           </div>
         </div>
@@ -156,6 +156,7 @@ cursor: pointer;
     <div class="d-inline">
       <h5 class="mb-0 follow-c d-inline" style="font-size: 1.4rem; font-weight: bold; line-height: 0;" data-toggle="modal"
         data-target="#exampleModalCenter">{{ followings|length }}</h5>
+
       <br>
       <button type="button d-inline" class="a-c" data-toggle="modal" data-target="#exampleModalCenter">
         <p style="font-size: 1rem;">
@@ -167,7 +168,7 @@ cursor: pointer;
       <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content speech-bubble">
+          <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalCenterTitle">FOLLOW</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -179,10 +180,12 @@ cursor: pointer;
               <a href="{% url 'accounts:user_detail' following.pk %}">
                 <h2 style="font-family: 'East Sea Dokdo'; font-size: 4rem;">{{following.username}}</h2>
               </a>
+
               {% endfor %}
             </div>
             <div class="modal-footer">
-              <button type="button" class="a-c" style="color:#fff;" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
             </div>
           </div>
         </div>
@@ -191,9 +194,9 @@ cursor: pointer;
   </div>
 
   {% if user == auth_user %}
-  <a class="nav-item nav-link nav-c nav-cc d-inline" href="{% url 'accounts:update' %}" role="tab">정보수정</a>
-  <a class="nav-item nav-link nav-c nav-cc d-inline" href="{% url 'accounts:change_password' %}" role="tab">비밀번호 변경</a>
-  <a class="nav-item nav-link nav-c nav-cc d-inline" role="tab">
+  <a class="nav-item nav-link nav-c d-inline" href="{% url 'accounts:update' %}" role="tab">정보수정</a>
+  <a class="nav-item nav-link nav-c d-inline" href="{% url 'accounts:change_password' %}" role="tab">비밀번호 변경</a>
+  <a class="nav-item nav-link nav-c d-inline" role="tab">
     <form action="{% url 'accounts:delete' %}" method='POST' style="display: inline;">
       {% csrf_token %}
       <input type="submit" value="회원탈퇴" class="navi">
@@ -228,6 +231,7 @@ cursor: pointer;
       <div class="card p-0 d-inline" style="width: 18rem; height: 30rem;">
         <img src="http://image.tmdb.org/t/p/original/{{movie.poster_url}}" class="card-img-top" alt="좋아하는 영화 이미지"
           width="100%" height="80%">
+
         <div class="card-body">
           <p class="card-text">
             <a href="{% url 'movies:detail' movie.pk %}">
@@ -243,7 +247,6 @@ cursor: pointer;
       {% endif %}
     </div>
   </div>
-
 
   {% if randomf and randomm %}
   오늘은 <span style="text-decoration: underline solid #ff0000;">{{ randomf.username }}님</span>이 추천하는 영화를 보는 건 어떨까요?
@@ -291,5 +294,6 @@ cursor: pointer;
   }).on('hide.bs.modal', function (e) {
     $('body').removeClass("example-open");
   })
+
 </script>
 {% endblock script %}

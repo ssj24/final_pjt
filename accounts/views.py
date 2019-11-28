@@ -7,7 +7,6 @@ from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm, PasswordChangeForm 
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse, HttpResponseBadRequest
-import random
 
 # Create your views here.
 def index(request):
@@ -39,7 +38,7 @@ def login(request):
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect(request.GET.get('next') or 'movies:index')
+            return redirect(request.GET.get('next') or 'accounts:index')
     else:
         form = AuthenticationForm()
     context = {'form': form,}
@@ -82,23 +81,18 @@ def change_password(request):
     context = {'form': form}
     return render(request, 'accounts/change_password.html', context)
 
-
-
 def user_detail(request, user_pk):
     auth_user = get_object_or_404(get_user_model(), pk=user_pk)
     ratings = auth_user.rating_set.all()
+
+    movie_id_list = []
+    for rating in ratings:
+        tmp = {"title": rating.movie.title, "id": rating.movie_id}
+        if tmp not in movie_id_list:
+            movie_id_list.append(tmp)
+ 
     movies = auth_user.like_movies.all()
-    if auth_user.following_user.all():
-        followings = auth_user.following_user.all()
-        randomf = random.choice(followings)
-        if randomf.like_movies.all():
-            randomms = randomf.like_movies.all()
-            randomm = random.choice(randomms)
-        else: randomm = ''
-    else:
-        randomf = ''
-        randomm = ''
-    context = {'auth_user': auth_user, 'ratings': ratings, 'movies': movies, 'randomf': randomf, 'randomm': randomm}
+    context = {'auth_user': auth_user, 'ratings': ratings, 'movies': movies, 'movie_id_list': movie_id_list,}
     return render(request, 'accounts/detail.html', context)
 
 @login_required
