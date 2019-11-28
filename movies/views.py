@@ -13,38 +13,10 @@ def index(request):
     movies = Movie.objects.all()
     pick = random.choice(movies)
     recommends = []
-    while len(recommends) < 6 :
+    while len(recommends) < 3 :
         tmp = random.choice(movies)
         if tmp not in recommends:
             recommends.append(tmp)
-    # # 로그인 확인 => user_id 확인
-    # if request.user.is_authenticated:
-    #     now_user =  get_object_or_404(get_user_model(), pk=request.user.pk)
-    #     ratings = now_user.rating_set.all()
-
-    #     # user가 남긴 review 가 있는지 확인
-    #     # 평정 5점이 넘고,
-    #     # 있다면 가장 높은 평점을 남긴 영화 genre 첫번째 id를 저장
-    #     if len(ratings) > 0:
-    #         Max_score = -1
-    #         Max_genres = []
-    #         for rating in ratings:
-    #             if Max_score < rating.score and rating.score > 5:
-    #                 Max_score = rating.score
-    #                 Max_genres = rating.movie.title
-            
-    #         # # 그 평점에 해당하는 영화들이 3
-    #         # if Max_score_genre != -1:
-    #         #     pass
-    #         # else:
-    #         #     while len(recommend) < 4:
-    #         #         tmp = random.choice(movies)
-    #         #         if tmp not in recommend:
-    #         #             recommend.append(tmp)
-        
-    #     context = {'pick': pick, 'recommend': recommend, 'ratings':ratings, 'Max_score':Max_score, 'Max_genres':Max_genres}
-    #     return render(request, 'movies/index.html', context)\
-
     context = {'pick': pick, 'recommends': recommends}
     return render(request, 'movies/index.html', context)
 
