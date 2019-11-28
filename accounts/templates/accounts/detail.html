@@ -97,8 +97,8 @@ cursor: pointer;
   <br>
   {% with followers=auth_user.follow_user.all followings=auth_user.following_user.all %}
   <div class="d-flex justify-content-center align-items-center">
-    div
-    <h2 class="d-inline" style="font-family: 'East Sea Dokdo'; font-size: 4rem;">{{ auth_user.username }}</h2>
+    <div style="align-top position: relative;">
+    <h2 class="d-inline" style="font-family: 'East Sea Dokdo'; font-size: 4rem; position: relative; left: 0px; bottom: 15px;">{{ auth_user.username }}</h2>
     &nbsp;&nbsp;&nbsp;
     {% if user.is_authenticated %}
     {% if user != auth_user %}
@@ -111,7 +111,7 @@ cursor: pointer;
     {% endif %}
     {% endif %}
     {% endif %}
-
+    </div>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <div class="d-inline">
       <h5 class="mb-0 follow-c d-inline" style="font-size: 1.4rem; font-weight: bold; line-height: 0;" data-toggle="modal"
