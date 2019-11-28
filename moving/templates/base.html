@@ -14,6 +14,11 @@
 
 	<!-- 부트스트랩-->
 	{% bootstrap_css %}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"/>
+
+
 	<!-- 폰트어썸 -->
 	<script src="https://kit.fontawesome.com/b9444c6aee.js" crossorigin="anonymous"></script>
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -24,11 +29,13 @@
 	<link href="https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap" rel="stylesheet">	<title>Moving</title>
 	<link href="https://fonts.googleapis.com/css?family=Nanum+Myeongjo|Sunflower:300&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=East+Sea+Dokdo&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Tangerine&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Nanum+Brush+Script&display=swap" rel="stylesheet">
 	<style>
 
 	* {
 		font-family: 'Nanum Myeongjo', 'Sunflower', 'Do Hyeon', 'Nanum Gothic Coding', 'Carrois Gothic', sans-serif;
-		
+		font-size: 1.8rem;
 	}
 
 	a {
@@ -38,7 +45,6 @@
 	a:hover, a:link:, a:active, a:visited {
 		color: #000 !important;
 	}
-	
 	.Nlogo {
 	}
 
@@ -55,23 +61,22 @@
 	}
 
 	.nav-c {
-
+		font-size: 1.8rem;
 		color: #000;
 	}
 	.nav-c:hover {
 		text-decoration: underline solid red !important;
-		font-size: 1.3rem;
+		font-size: 2rem;
 		font-weight: bolder;
 		cursor: pointer;
 
 	}
 	.a-c {
 		color: #000;
-		font-size: 1.3rem;
 	}
 	.a-c:hover {
 		text-decoration: underline solid red !important;
-		font-size: 1.3rem;
+		font-size: 1.9rem;
 		font-weight: bolder;
 		color: #000;
 		cursor: pointer;
@@ -94,7 +99,7 @@
 	.hr1 {
 		display: block;
 		margin : 1em 0;
-		border-style: inset;
+		border-style: dotted;
 		color: #fff;
 	}
 	{% block css %}
@@ -106,7 +111,7 @@
 
 <body>
 
-	<div class="container-fluid fixed-top">
+	<div class="container-fluid fixed-top"">
 		<div class="navi-bar"></div>
 		<div class="row justify-content-between p-3 navi-border" style="border-bottom: solid 1px #fff;">
 			
@@ -115,8 +120,8 @@
 			
 			
 			</div>
-			<nav class="d-inline col-8 Nlogo">
-				<div class="nav simple-tab-nav row justify-content-end" id="nav-tab" role="tablist">
+			<nav class="d-inline col-8 Nlogo" style="position: relative;">
+				<div class="nav simple-tab-nav row" id="nav-tab" style="position: absolute; right: 0; top: 15%;" role="tablist">
 					<a class="nav-item nav-link active nav-c" id="nav-movie-tab" href="{% url 'movies:list' %}" role="tab" aria-controls="nav-home" aria-selected="true">MOVIES</a>
 					{% if user.is_authenticated %}
 						<a class="nav-item nav-link nav-c" id="nav-logout-tab" href="{% url 'accounts:logout' %}" role="tab" aria-controls="nav-profile" aria-selected="false">LOGOUT</a>

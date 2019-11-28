@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-
 {% block css %}
 .navi-border {
 background-color: transparent;
@@ -8,11 +7,9 @@ background-color: transparent;
 .navi-border:hover {
 background-color: #fff;
 }
-
 .nav-c {
 color: #fff;
 }
-
 .navi {
 color: #fff;
 }
@@ -25,9 +22,6 @@ color: #000;
 html {
 overflow-y: hidden;
 }
-
-
-
 html,
 body {
 height: 100%;
@@ -55,34 +49,6 @@ background-size: cover;
 -o-background-size: cover;
 opacity:0.6;
 }
-
-html,
-body {
-height: 100%;
-}
-.carousel,
-.item,
-.active {
-height: 100%;
-}
-.carousel-inner {
-height: 100%;
-background: #000;
-}
-.carousel-caption{padding-bottom:80px;}
-h2{font-size: 60px;}
-p{padding:10px}
-.fill {
-width: 100%;
-height: 100%;
-background-position: center;
--webkit-background-size: cover;
--moz-background-size: cover;
-background-size: cover;
--o-background-size: cover;
-
-}
-
 .btn-transparent {
 background: transparent;
 color: #fff;
@@ -98,21 +64,19 @@ border-radius: 70px;
 padding: 11px 45px;
 font-size: 18px;
 }
-
 {% endblock css %}
 {% block carousel %}
-
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
       <div id="myCarousel" class="carousel slide">
         <div class="carousel-inner">
           <div class="item active">
-            <div class="fill" style="background-image:url({% static 'movies/img/curtain.jpg' %}); filter: grayscale(0.4);"></div>
+            <div class="fill" style="background-image:url({% static 'movies/img/curtain.jpg' %});"></div>
             <div class="carousel-caption">
-              <h2 class="animated fadeInLeft" style="font-family: 'East Sea Dokdo'; font-size: 15rem;">Moving</h2>
-              <h3 class="animated fadeInUp" style="font-family: 'East Sea Dokdo'; font-size: 4rem;">당신의 마음을 움직일 영화를 추천해 드립니다</h3>
-              <p class="animated fadeInUp"><a href="{% url 'movies:list' %}" class="btn btn-transparent btn-rounded btn-large" style="font-family: 'East Sea Dokdo'; font-size: 4rem;">MOVIE LIST</a>
+              <h2 class="animated fadeInLeft">Moving</h2>
+              <p class="animated fadeInUp">당신의 마음을 움직일 영화를 추천해 드립니다...</p>
+              <p class="animated fadeInUp"><a href="#" class="btn btn-transparent btn-rounded btn-large">MOVIE LIST</a>
               </p>
             </div>
           </div>
@@ -120,18 +84,10 @@ font-size: 18px;
       </div>
     </div>
     <div class="carousel-item">
-      <iframe height="100%" width="100%" src="http://www.youtube.com/embed/{{pick.teaser}}?&autoplay=1" frameborder="0"
-        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="opacity: 0.6;"></iframe>
-      <div class="carousel-caption">
-        <h1 class="animated fadeInUp" style="font-family: 'East Sea Dokdo'; font-size: 4rem;">오늘의 추천 영화는</h1>
-        <h2 class="animated fadeInLeft" style="font-family: 'East Sea Dokdo'; font-size: 15rem;">{{ pick.title }}</h2>
-        <p class="animated fadeInUp"><a href="{% url 'movies:detail' pick.pk %}" class="btn btn-transparent btn-rounded btn-large" style="font-family: 'East Sea Dokdo'; font-size: 4rem;">보러가기</a>
-        </p>
-      </div>
-
+      <iframe height="100%" width="100%" src="http://www.youtube.com/embed/{{pick.teaser}}" frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
   </div>
-
   <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
@@ -141,5 +97,4 @@ font-size: 18px;
     <span class="sr-only">Next</span>
   </a>
 </div>
-
 {% endblock %}

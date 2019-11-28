@@ -41,6 +41,7 @@ def index(request):
     #         #         tmp = random.choice(movies)
     #         #         if tmp not in recommend:
     #         #             recommend.append(tmp)
+
         
     #     context = {'pick': pick, 'recommend': recommend, 'ratings':ratings, 'Max_score':Max_score, 'Max_genres':Max_genres}
     #     return render(request, 'movies/index.html', context)\
