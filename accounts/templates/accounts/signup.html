@@ -16,6 +16,17 @@ body {
   font-family: 'Carrois Gothic', sans-serif;
   font-weight: bold;
 }
+.update_btn {
+  border: 0;
+  background: none;
+  color: #fff;
+}
+.update_btn:hover {
+  font-size: 1.9rem;
+  border: solid 1px #ff0000;
+  border-radius: 5px;
+  color: #fff;
+}
 {% endblock css %}
 {% block content %}
   <div class="row justify-content-center">
@@ -25,9 +36,8 @@ body {
       <form action="" method="POST">
         {% csrf_token %}
         {% bootstrap_form form %}
-        <input type="submit" class="btn btn-outline-info formbtn" value="회원가입">
+        <input type="submit" class="update_btn" value="회원가입">
         
-        <a href="{% url 'accounts:index' %}" class="btn btn-outline-info formbtn">BACK</a>
       </form>
     </div>
   </div>
