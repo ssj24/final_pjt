@@ -1,0 +1,44 @@
+[
+{
+    "model": "socialaccount.socialapp",
+    "pk": 1,
+    "fields": {
+        "provider": "github",
+        "name": "github",
+        "client_id": "df625706ccaa69b4fde4",
+        "secret": "307a891ec509bf8eb212aea2f79c070a459bcc06",
+        "key": "",
+        "sites": [
+            1
+        ]
+    }
+},
+{
+    "model": "socialaccount.socialapp",
+    "pk": 2,
+    "fields": {
+        "provider": "kakao",
+        "name": "kakao",
+        "client_id": "04d4395187edf86b3fbacfd669162fb7",
+        "secret": "Z3akoIg3MgAfeGKEYXE9Eyki2an9wd81",
+        "key": "",
+        "sites": [
+            1
+        ]
+    }
+},
+{
+    "model": "socialaccount.socialapp",
+    "pk": 3,
+    "fields": {
+        "provider": "naver",
+        "name": "naver",
+        "client_id": "8GM_pZ0Rm4W3UiuZQ8TB",
+        "secret": "ZTenAlR7NQ",
+        "key": "",
+        "sites": [
+            1
+        ]
+    }
+}
+]
