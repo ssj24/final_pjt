@@ -3,28 +3,59 @@
 
 {% block css %}
 .navi-border {
-  background-color: transparent;
+background-color: transparent;
 }
 .navi-border:hover {
-	background-color: #fff;
-	}
+background-color: #fff;
+}
 
 .nav-c {
-  color: #fff;
+color: #fff;
 }
 
 .navi {
-  color: #fff;
+color: #fff;
 }
 .navi-border:hover .nav-c {
-  color: #000;
+color: #000;
 }
 .navi-border:hover .navi {
-  color: #000;
+color: #000;
 }
 html {
-  overflow-y: hidden;
+overflow-y: hidden;
 }
+
+
+
+html,
+body {
+height: 100%;
+}
+.carousel,
+.item,
+.active {
+height: 100%;
+}
+.carousel-inner {
+height: 100%;
+background: #000;
+}
+.carousel-caption{padding-bottom:80px;}
+h2{font-size: 60px;}
+p{padding:10px}
+/* Background images are set within the HTML using inline CSS, not here */
+.fill {
+width: 100%;
+height: 100%;
+background-position: center;
+-webkit-background-size: cover;
+-moz-background-size: cover;
+background-size: cover;
+-o-background-size: cover;
+opacity:0.6;
+}
+
 html,
 body {
 height: 100%;
@@ -51,6 +82,7 @@ background-size: cover;
 -o-background-size: cover;
 
 }
+
 .btn-transparent {
 background: transparent;
 color: #fff;
@@ -66,6 +98,7 @@ border-radius: 70px;
 padding: 11px 45px;
 font-size: 18px;
 }
+
 {% endblock css %}
 {% block carousel %}
 
@@ -95,8 +128,10 @@ font-size: 18px;
         <p class="animated fadeInUp"><a href="{% url 'movies:detail' pick.pk %}" class="btn btn-transparent btn-rounded btn-large" style="font-family: 'East Sea Dokdo'; font-size: 4rem;">보러가기</a>
         </p>
       </div>
+
     </div>
   </div>
+
   <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
@@ -106,14 +141,5 @@ font-size: 18px;
     <span class="sr-only">Next</span>
   </a>
 </div>
-
-
-
-
-
-
-
-
-
 
 {% endblock %}
