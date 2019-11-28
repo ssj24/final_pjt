@@ -128,7 +128,7 @@ margin: 5px;
       &nbsp;&nbsp;&nbsp;
       {% if user.is_authenticated %}
       {% if user != auth_user %}
-      {% if user in follwers %}
+      {% if user in followers %}
 
       <span class="a-cf follow" data-id="{{ auth_user.pk }}"
         style="position: relative; left: 0px; bottom: 10px;">-</span>
@@ -243,7 +243,7 @@ margin: 5px;
           리뷰입니다
         </li>
         <li>
-          <h3>{{ review.score }} | {{ review.comment }}</h3>
+          <h3>⭐{{ review.score }} | {{ review.comment }}</h3>
         </li>
         <hr class="hr1">
         {% endfor %}
@@ -262,14 +262,10 @@ margin: 5px;
         
         <div class="bd-example">
           <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-              <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-              <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-              <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-            </ol>
+            
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img src="http://image.tmdb.org/t/p/original/{{movie_first.poster_url}}" class="d-block w-100" alt="포스터 이미지">
+                <div class="carousel-item active" style="border-radius: 25px;">
+                  <img src="http://image.tmdb.org/t/p/original/{{movie_first.poster_url}}" class="d-block w-100" alt="포스터 이미지" style="border-radius: 25px;">
                   <div class="carousel-caption d-none d-md-block">
                   <a href="{% url 'movies:detail' movie_first.pk %}" class="a-c">
                     <h5 style="color: #fff; font-size: 2.5rem; font-weight: bold; background-color: rgba(0, 0, 0, 0.7);">{{movie_first.title}}</h5>
@@ -282,7 +278,7 @@ margin: 5px;
               {% for movie in movies %}
                 
                   <div class="carousel-item">
-                    <img src="http://image.tmdb.org/t/p/original/{{movie.poster_url}}" class="d-block w-100" alt="포스터 이미지">
+                    <img src="http://image.tmdb.org/t/p/original/{{movie.poster_url}}" class="d-block w-100" alt="포스터 이미지" style="border-radius: 25px;">
                     <div class="carousel-caption d-none d-md-block">
                     <a href="{% url 'movies:detail' movie.pk %}" class="a-c">
                       <h5 style="color: #fff; font-size: 2.5rem; font-weight: bold; background-color: rgba(0, 0, 0, 0.7);">{{movie.title}}</h5>
@@ -336,6 +332,8 @@ margin: 5px;
         axios.defaults.xsrfHeaderName = 'X-CSRFToken'
         axios.get(`/accounts/follow/${followId}/`)
           .then(response => {
+            document.querySelector(`#follow-count-${followId}`).innerText = response.data.count
+
             if (response.data.followed) {
 
               event.target.innerText = "-"
@@ -343,7 +341,6 @@ margin: 5px;
 
               event.target.innerText = "+"
             }
-            document.querySelector(`#follow-count-${followId}`).innerText = response.data.count
           })
           .catch(error => console.log(error))
       })

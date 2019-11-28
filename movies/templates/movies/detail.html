@@ -567,7 +567,13 @@ width: 320px;
         <!-- Contenedor del Comentario -->
         <div class="comment-box">
           <div class="comment-head">
-            <h6 class="comment-name"><a href="{% url 'accounts:user_detail' user.id %}">{{review.user}}</a></h6>
+            <h6 class="comment-name">
+              {% if user.is_authenticated %}
+              <a href="{% url 'accounts:user_detail' review.user.pk %}">{{review.user}}</a>
+              {% else %}
+              {{review.user}}
+              {% endif %}
+            </h6>
             <p class="d-inline">⭐ {{review.score}} 점</p>
             {% if review.user == request.user %}
             <form action="{% url 'movies:review_delete' movie.pk review.pk %}" method="POST" class="d-inline float-right">

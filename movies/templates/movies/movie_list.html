@@ -75,7 +75,8 @@ span {
     <div v-if="selectedGenreId === 0" class="row">
       <div v-for="movie in movies" :key="movie.id" class="card col-3 p-0 imgdiv" id="imgdiv">
         <img height="100%" :src="'http://image.tmdb.org/t/p/original/'+ movie.fields.poster_url" id="imgs" class="card-img-top" :alt="movie.fields.title+'포스터'">
-        <a :href="movie.pk"><div class="overlay text p-3"><span>[[ movie.fields.title ]]</span></div></a>
+        <a :href="movie.pk"><div class="overlay text p-3"><span style="font-weight: bold;">[[ movie.fields.title ]]
+        <br><br>⭐[[movie.fields.audience]]</span></div></a>
       </div>
 
     </div>

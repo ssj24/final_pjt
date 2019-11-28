@@ -141,6 +141,7 @@ canvas {
 
     </div>
     {% if user.is_authenticated %}
+		{% if user.rating_set.all %}
     <div class="carousel-item" style="position:relative">
     <div class="carousel-caption">
       <h2 class="animated fadeInLeft d-inline" style="font-family: 'East Sea Dokdo';">{{user}} 님께 추천해드립니다!</h2>
@@ -155,6 +156,7 @@ canvas {
       </div>
       <canvas id="canvas">Canvas is not supported in your browser.</canvas>
     </div>
+		{% endif %}
     {% endif %}
   </div>
 
