@@ -2,18 +2,10 @@
 
 ## 1. 프로젝트 소개
 
-### 1. 사이트 소개
-
 ![20191128_174303](https://user-images.githubusercontent.com/52685241/69791279-8396f180-1207-11ea-81be-e3496240d43b.png)
 
 - 사이트 명: Moving
 - 부제 : 당신의 마음을 움직일 영화를 추천해드립니다...
-
-
-
-### 2. 배포 서버 URL
-
--  http://mac-flex.mkdhzpit7q.ap-northeast-2.elasticbeanstalk.com/ 
 
 
 
